@@ -1,0 +1,175 @@
+#body {
+  -fx-background-color: #eee;
+}
+
+.login-background {
+    -fx-background-color: #eee;
+}
+
+.heading {
+
+    -fx-background-color: #333;
+    -fx-background-radius: 5 5 0 0;
+    -fx-padding: 10px;
+
+}
+
+.text-field {
+    -fx-background-color: #fff;
+    -fx-background-radius: 5;
+    -fx-border-color: #bbb;
+    -fx-border-radius: 5;
+    -fx-border-width: 1px;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+}
+.text-field:focused {
+    -fx-border-color: #333;
+}
+.login-button {
+    -fx-background-color: #333;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-text-fill: #fff;
+    -fx-padding: 10px;
+}
+.login-button:hover {
+    -fx-background-color: #444;
+    -fx-cursor: hand;
+}
+.login-button:pressed {
+    -fx-background-color: linear-gradient(to top, #444, #666);
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+.exit-button {
+    -fx-background-color: #515152;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-text-fill: #eee;
+    -fx-padding: 10px;
+}
+.exit-button:hover {
+    -fx-background-color: #526263;
+    -fx-cursor: hand;
+}
+.exit-button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+.save-button {
+-fx-background-color: #1e7fff;
+-fx-background-radius: 5;
+-fx-font-size: 14px;
+-fx-text-fill: #fff;
+-fx-padding: 10px;
+}
+.save-button:hover {
+-fx-background-color: #1b6fdb;
+-fx-cursor: hand;
+}
+.save-button:pressed {
+-fx-scale-x: 0.95;
+-fx-scale-y: 0.95;
+}
+
+.edit-button {
+-fx-background-color: #5cb85c; /* kolor zielony kojarzący się z pozytywną akcją */
+-fx-background-radius: 5;
+-fx-font-size: 14px;
+-fx-text-fill: #fff;
+-fx-padding: 10px;
+}
+.edit-button:hover {
+-fx-background-color: #449d44;
+-fx-cursor: hand;
+}
+.edit-button:pressed {
+-fx-scale-x: 0.95;
+-fx-scale-y: 0.95;
+}
+
+.group-button {
+-fx-background-color: #f0ad4e; /* kolor pomarańczowy kojarzący się z akcją grupowania */
+-fx-background-radius: 5;
+-fx-font-size: 14px;
+-fx-text-fill: #fff;
+-fx-padding: 10px;
+}
+.group-button:hover {
+-fx-background-color: #ec971f;
+-fx-cursor: hand;
+}
+.group-button:pressed {
+-fx-scale-x: 0.95;
+-fx-scale-y: 0.95;
+}
+
+.delete-button {
+-fx-background-color: #d9534f; /* kolor czerwony kojarzący się z akcją usunięcia */
+-fx-background-radius: 5;
+-fx-font-size: 14px;
+-fx-text-fill: #fff;
+-fx-padding: 10px;
+}
+.delete-button:hover {
+-fx-background-color: #c9302c;
+-fx-cursor: hand;
+}
+.delete-button:pressed {
+-fx-scale-x: 0.95;
+-fx-scale-y: 0.95;
+}
+
+
+#katalogi Button {
+  -fx-background-color: #eee;
+  -fx-text-fill: #333;
+  -fx-font-size: 14px;
+  -fx-padding: 10px;
+  -fx-background-radius: 0;
+}
+#katalogi Button:hover {
+  -fx-background-color: #ccc;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-cursor: hand;
+}
+#katalogi Button:pressed  {
+  -fx-background-color: linear-gradient(to top, #ccc, #aaa);
+}
+
+.dodaj-kontakt-button {
+  -fx-background-color: #eee;
+  -fx-text-fill: #333;
+  -fx-font-size: 14px;
+  -fx-background-radius: 0;
+}
+.dodaj-kontakt-button:hover {
+  -fx-background-color: #ccc;
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-cursor: hand;
+}
+.dodaj-kontakt-button:pressed  {
+  -fx-background-color: linear-gradient(to top, #ccc, #aaa);
+}
+
+
+.przycisk-listy-wybrany {
+   -fx-background-color: radial-gradient(center 50% 100%, radius 40%, #666, #333);
+}
+.przycisk-listy:hover {
+   -fx-background-color: radial-gradient(center 50% 100%, radius 40%, #666, #333);
+   -fx-cursor: hand;
+}
+
+.kontakt:hover {
+   -fx-background-color: #ccc;
+   -fx-cursor: hand;
+}
+
+
+.settings-button:hover {
+    -fx-cursor: hand;
+}
