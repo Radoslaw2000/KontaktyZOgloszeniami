@@ -148,31 +148,7 @@
             </GridPane>
             <ScrollPane fitToWidth="true" GridPane.rowIndex="1">
                <content>
-                  <VBox fx:id="content" maxHeight="1.7976931348623157E308">
-                     <children>
-                         <GridPane minWidth="448.0" onMouseClicked="#dodajKontaktButtonAction" prefHeight="30.0" styleClass="dodaj-kontakt-button">
-                             <columnConstraints>
-                                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" percentWidth="46.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" percentWidth="54.0" />
-                             </columnConstraints>
-                             <rowConstraints>
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                             </rowConstraints>
-                             <children>
-                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                     <image>
-                                         <Image url="@add-contact.png" />
-                                     </image>
-                                 </ImageView>
-                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dodaj kontakt" GridPane.columnIndex="1">
-                                     <font>
-                                         <Font size="18.0" />
-                                     </font>
-                                 </Text>
-                             </children>
-                         </GridPane>
-                     </children>
-                  </VBox>
+                  <VBox fx:id="content" maxHeight="1.7976931348623157E308" prefHeight="250.0" prefWidth="446.0" />
                </content>
             </ScrollPane>
          </children>

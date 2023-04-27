@@ -13,6 +13,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ public class EkranGlownyController implements Initializable {
 
     @FXML
     ImageView gear;
+
 
 
     private void logout(Stage stage) {

@@ -1,6 +1,7 @@
 package com.example.kck;
 
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -95,18 +96,38 @@ public class EkranGlowny2Controller implements Initializable {
         contextMenu.show(gear, event.getScreenX(), event.getScreenY());
     }
 
+    public void printWindowSize(Scene scene) {
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("New scene width: " + newValue);
+        });
+
+        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("New scene height: " + newValue);
+        });
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            OgloszenieGridPane ogloszenieGridPane = new OgloszenieGridPane();
+        Platform.runLater(() -> {
+            try {
+                content.getChildren().add(new CategoryGridPane());
+                if(SceneManager.getInstance().getStage() == null)
+                    System.out.println("null jest");
+
+                printWindowSize(SceneManager.getInstance().getStage().getScene());
+            /*
+            OgloszenieGridPane ogloszenieGridPane;
             for(int i = 0; i<10; i++) {
                 ogloszenieGridPane = new OgloszenieGridPane();
                 content.getChildren().add(ogloszenieGridPane);
             }
+             */
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        });
+
 
     }
 }
