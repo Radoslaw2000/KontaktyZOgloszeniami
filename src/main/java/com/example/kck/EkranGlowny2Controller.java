@@ -96,25 +96,26 @@ public class EkranGlowny2Controller implements Initializable {
         contextMenu.show(gear, event.getScreenX(), event.getScreenY());
     }
 
-    public void printWindowSize(Scene scene) {
-        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("New scene width: " + newValue);
-        });
+    private void responsiveCategoryMenu(Scene scene) {
+        double sceneWidth = scene.getWidth() - 200.0;
+        int columns1 = (int) (sceneWidth / 130.0);
+        content.getChildren().add(1, new CategoryGridPane(columns1));
 
-        scene.heightProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("New scene height: " + newValue);
+        scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double newWidth = (double) newValue - 200.0;
+            int columns = (int) (newWidth / 135.0);
+            content.getChildren().set(1, new CategoryGridPane(columns));
         });
     }
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         Platform.runLater(() -> {
             try {
-                content.getChildren().add(new CategoryGridPane());
-                if(SceneManager.getInstance().getStage() == null)
-                    System.out.println("null jest");
-
-                printWindowSize(SceneManager.getInstance().getStage().getScene());
+                responsiveCategoryMenu(SceneManager.getInstance().getStage().getScene());
             /*
             OgloszenieGridPane ogloszenieGridPane;
             for(int i = 0; i<10; i++) {

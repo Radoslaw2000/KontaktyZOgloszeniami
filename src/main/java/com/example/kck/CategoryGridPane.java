@@ -2,54 +2,72 @@ package com.example.kck;
 
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
+import java.util.Arrays;
+import java.util.List;
 
 public class CategoryGridPane extends GridPane {
 
-    public CategoryGridPane() {
+    private List<String[]> categories = Arrays.asList(
+            new String[]{"/com/example/kck/Kategorie/1.png", "Nieruchomości"},
+            new String[]{"/com/example/kck/Kategorie/2.png", "Budownictwo"},
+            new String[]{"/com/example/kck/Kategorie/3.png", "Dla domu"},
+            new String[]{"/com/example/kck/Kategorie/4.png", "Audio i wideo"},
+            new String[]{"/com/example/kck/Kategorie/5.png", "Komputery"},
+            new String[]{"/com/example/kck/Kategorie/6.png", "Telefony"},
+            new String[]{"/com/example/kck/Kategorie/7.png", "Różne"},
+            new String[]{"/com/example/kck/Kategorie/8.png", "Edukacja"},
+            new String[]{"/com/example/kck/Kategorie/9.png", "Praca"},
+            new String[]{"/com/example/kck/Kategorie/10.png", "Biznes"},
+            new String[]{"/com/example/kck/Kategorie/11.png", "Maszyny"},
+            new String[]{"/com/example/kck/Kategorie/12.png", "Rolnictwo"},
+            new String[]{"/com/example/kck/Kategorie/13.png", "Motoryzacja"},
+            new String[]{"/com/example/kck/Kategorie/14.png", "Hobby"},
+            new String[]{"/com/example/kck/Kategorie/15.png", "Zwierzęta"},
+            new String[]{"/com/example/kck/Kategorie/16.png", "Sport i rekreacja"},
+            new String[]{"/com/example/kck/Kategorie/17.png", "Turystyka"},
+            new String[]{"/com/example/kck/Kategorie/18.png", "Zdrowie"},
+            new String[]{"/com/example/kck/Kategorie/19.png", "Uroda"},
+            new String[]{"/com/example/kck/Kategorie/20.png", "Uroczystości"},
+            new String[]{"/com/example/kck/Kategorie/21.png", "Wolny czas"},
+            new String[]{"/com/example/kck/Kategorie/22.png", "Moda"},
+            new String[]{"/com/example/kck/Kategorie/23.png", "Dla dzieci"},
+            new String[]{"/com/example/kck/Kategorie/24.png", "Poznajmy się"}
+
+    );
+
+    public CategoryGridPane(int columns) {
+        int kolumny = Math.min(Math.max(3, columns), 10);
+        int wiersze = (int) Math.ceil((double) categories.size() / kolumny);
+
         // kolumny
-        ColumnConstraints col1 = new ColumnConstraints();
-        col1.setHgrow(Priority.SOMETIMES);
-        col1.setMinWidth(120.0);
-
-        ColumnConstraints col2 = new ColumnConstraints();
-        col2.setHgrow(Priority.SOMETIMES);
-        col2.setMinWidth(120.0);
-
-        ColumnConstraints col3 = new ColumnConstraints();
-        col3.setHgrow(Priority.SOMETIMES);
-        col3.setMinWidth(120.0);
+        for (int i = 0; i < kolumny; i++) {
+            ColumnConstraints col = new ColumnConstraints();
+            col.setHgrow(Priority.SOMETIMES);
+            col.setMinWidth(120.0);
+            this.getColumnConstraints().add(col);
+        }
 
         // wiersze
-        RowConstraints row1 = new RowConstraints();
-        row1.setMinHeight(100.0);
-        row1.setVgrow(Priority.SOMETIMES);
-
-        RowConstraints row2 = new RowConstraints();
-        row2.setMinHeight(100.0);
-        row2.setVgrow(Priority.SOMETIMES);
-
-        this.getColumnConstraints().addAll(col1, col2, col3);
-        this.getRowConstraints().addAll(row1, row2);
+        for (int i = 0; i < wiersze; i++) {
+            RowConstraints row = new RowConstraints();
+            row.setMinHeight(100.0);
+            row.setVgrow(Priority.SOMETIMES);
+            this.getRowConstraints().add(row);
+        }
 
         // dzieci
-        CategoryTile ct1 = new CategoryTile("/com/example/kck/Kategorie/1.png", "Nieruchomości");
-        CategoryTile ct2 = new CategoryTile("/com/example/kck/Kategorie/1.png", "Nieruchomości");
-        CategoryTile ct3 = new CategoryTile("/com/example/kck/Kategorie/1.png", "Nieruchomości");
-        CategoryTile ct4 = new CategoryTile("/com/example/kck/Kategorie/1.png", "Nieruchomości");
-        CategoryTile ct5 = new CategoryTile("/com/example/kck/Kategorie/1.png", "Nieruchomości");
-        CategoryTile ct6 = new CategoryTile("/com/example/kck/Kategorie/1.png", "Nieruchomości");
-
-        this.add(ct1, 0, 0);
-        this.add(ct2, 1, 0);
-        this.add(ct3, 2, 0);
-        this.add(ct4, 0, 1);
-        this.add(ct5, 1, 1);
-        this.add(ct6, 2, 1);
+        int i = 0;
+        for (String[] category : categories) {
+            CategoryTile ct = new CategoryTile(category[0], category[1]);
+            this.add(ct, i % kolumny, i / kolumny);
+            i++;
+        }
 
         // margines
         this.setVgap(5.0);
         this.setHgap(5.0);
-        Insets margin = new Insets(5.0, 5.0, 5.0, 5.0);
+        Insets margin = new Insets(5.0, 15.0, 5.0, 5.0);
         VBox.setMargin(this, margin);
     }
 }
+
