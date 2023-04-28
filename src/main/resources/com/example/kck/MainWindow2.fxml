@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -39,28 +39,22 @@
             </ImageView>
             <ScrollPane fitToWidth="true" maxWidth="270.0" minWidth="200.0" prefHeight="200.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                <content>
-                  <VBox fx:id="katalogi" alignment="TOP_CENTER" maxWidth="270.0" minWidth="180.0" prefWidth="200.0">
+                  <VBox fx:id="katalogi" alignment="TOP_CENTER" maxWidth="270.0" minWidth="180.0">
                      <children>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Rodzina" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Przyjaciele" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Praca" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Ulubione" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
+                        <HBox alignment="CENTER" onMouseClicked="#dodajOgloszenieButtonAction" prefWidth="200.0" styleClass="dodaj-kontakt-button">
+                           <children>
+                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                     <image>
+                                         <Image url="@add-contact.png" />
+                                     </image>
+                                 </ImageView>
+                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dodaj Ogłoszenie">
+                                     <font>
+                                         <Font size="18.0" />
+                                     </font>
+                                 </Text>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </content>
@@ -140,32 +134,7 @@
             </GridPane>
             <ScrollPane fitToWidth="true" GridPane.rowIndex="1">
                <content>
-                  <VBox fx:id="content" maxHeight="1.7976931348623157E308">
-                     <children>
-                         <GridPane minWidth="448.0" onMouseClicked="#dodajOgloszenieButtonAction" prefHeight="30.0" styleClass="dodaj-kontakt-button">
-                             <columnConstraints>
-                                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" percentWidth="46.0" />
-                                 <ColumnConstraints hgrow="SOMETIMES" percentWidth="54.0" />
-                             </columnConstraints>
-                             <rowConstraints>
-                                 <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                             </rowConstraints>
-                             <children>
-                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                     <image>
-                                         <Image url="@add-contact.png" />
-                                     </image>
-                                 </ImageView>
-                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dodaj Ogłoszenie" GridPane.columnIndex="1">
-                                     <font>
-                                         <Font size="18.0" />
-                                     </font>
-                                 </Text>
-                             </children>
-                         </GridPane>
-
-                     </children>
-                  </VBox>
+                  <VBox fx:id="content" maxHeight="1.7976931348623157E308" />
                </content>
             </ScrollPane>
          </children>

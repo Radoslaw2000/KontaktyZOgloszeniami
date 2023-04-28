@@ -2,7 +2,6 @@ package com.example.kck;
 
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,6 +27,9 @@ public class EkranGlowny2Controller implements Initializable {
 
     @FXML
     ImageView gear;
+
+    @FXML
+    VBox katalogi;
 
     private void logout(Stage stage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("StartWindow.fxml"));
@@ -99,12 +101,12 @@ public class EkranGlowny2Controller implements Initializable {
     private void responsiveCategoryMenu(Scene scene) {
         double sceneWidth = scene.getWidth() - 200.0;
         int columns1 = (int) (sceneWidth / 130.0);
-        content.getChildren().add(1, new CategoryGridPane(columns1));
+        content.getChildren().add(0, new CategoryGridPane(columns1));
 
         scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             double newWidth = (double) newValue - 200.0;
             int columns = (int) (newWidth / 135.0);
-            content.getChildren().set(1, new CategoryGridPane(columns));
+            content.getChildren().set(0, new CategoryGridPane(columns));
         });
     }
 
@@ -116,6 +118,7 @@ public class EkranGlowny2Controller implements Initializable {
         Platform.runLater(() -> {
             try {
                 responsiveCategoryMenu(SceneManager.getInstance().getStage().getScene());
+                katalogi.getChildren().add(new Filtry());
             /*
             OgloszenieGridPane ogloszenieGridPane;
             for(int i = 0; i<10; i++) {
