@@ -1,7 +1,6 @@
 package com.example.kck;
 
-
-import javafx.event.ActionEvent;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,8 +12,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -25,9 +24,10 @@ import java.util.ResourceBundle;
 public class EkranGlownyController implements Initializable {
     @FXML
     VBox content;
-
     @FXML
     ImageView gear;
+    @FXML
+    Text login;
 
 
 
@@ -99,15 +99,18 @@ public class EkranGlownyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            KontaktGridPane kontaktGridPane = new KontaktGridPane();
-            for(int i = 0; i<10; i++){
-                content.getChildren().add(kontaktGridPane);
-                kontaktGridPane = new KontaktGridPane();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
+        Platform.runLater(()->{
+            try {
+                login.setText(Settings.getInstance().getLogin());
+                KontaktGridPane kontaktGridPane = new KontaktGridPane();
+                for(int i = 0; i<10; i++){
+                    content.getChildren().add(kontaktGridPane);
+                    kontaktGridPane = new KontaktGridPane();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

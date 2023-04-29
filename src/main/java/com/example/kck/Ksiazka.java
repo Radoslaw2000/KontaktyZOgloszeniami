@@ -21,7 +21,7 @@ public class Ksiazka extends Application {
         stage.setMinHeight(360);
         stage.setMinWidth(650);
 
-        SceneManager.getInstance().setStage(stage);
+        Settings.getInstance().setStage(stage);
         stage.show();
 
     }

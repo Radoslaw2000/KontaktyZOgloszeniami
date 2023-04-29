@@ -97,4 +97,60 @@ public class Filtry extends VBox {
         this.setSpacing(5);
 
     }
+
+    public TextField getFromPriceField() {
+        return fromPriceField;
+    }
+
+    public void setFromPriceField(TextField fromPriceField) {
+        this.fromPriceField = fromPriceField;
+    }
+
+    public TextField getToPriceField() {
+        return toPriceField;
+    }
+
+    public void setToPriceField(TextField toPriceField) {
+        this.toPriceField = toPriceField;
+    }
+
+    public CheckBox getNewCheckBox() {
+        return newCheckBox;
+    }
+
+    public void setNewCheckBox(CheckBox newCheckBox) {
+        this.newCheckBox = newCheckBox;
+    }
+
+    public CheckBox getUsedCheckBox() {
+        return usedCheckBox;
+    }
+
+    public void setUsedCheckBox(CheckBox usedCheckBox) {
+        this.usedCheckBox = usedCheckBox;
+    }
+
+    public CheckBox getDamagedCheckBox() {
+        return damagedCheckBox;
+    }
+
+    public void setDamagedCheckBox(CheckBox damagedCheckBox) {
+        this.damagedCheckBox = damagedCheckBox;
+    }
+
+    public TextField getCityField() {
+        return cityField;
+    }
+
+    public void setCityField(TextField cityField) {
+        this.cityField = cityField;
+    }
+
+    public MenuButton getRegionMenu() {
+        return regionMenu;
+    }
+
+    public void setRegionMenu(MenuButton regionMenu) {
+        this.regionMenu = regionMenu;
+    }
 }

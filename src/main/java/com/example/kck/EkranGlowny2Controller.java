@@ -101,12 +101,12 @@ public class EkranGlowny2Controller implements Initializable {
     private void responsiveCategoryMenu(Scene scene) {
         double sceneWidth = scene.getWidth() - 200.0;
         int columns1 = (int) (sceneWidth / 130.0);
-        content.getChildren().add(0, new CategoryGridPane(columns1));
+        content.getChildren().add(0, new CategoryGridPane(columns1, content));
 
         scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             double newWidth = (double) newValue - 200.0;
             int columns = (int) (newWidth / 135.0);
-            content.getChildren().set(0, new CategoryGridPane(columns));
+            content.getChildren().set(0, new CategoryGridPane(columns, content));
         });
     }
 
@@ -117,7 +117,7 @@ public class EkranGlowny2Controller implements Initializable {
 
         Platform.runLater(() -> {
             try {
-                responsiveCategoryMenu(SceneManager.getInstance().getStage().getScene());
+                responsiveCategoryMenu(Settings.getInstance().getStage().getScene());
                 katalogi.getChildren().add(new Filtry());
             /*
             OgloszenieGridPane ogloszenieGridPane;

@@ -35,7 +35,7 @@ public class CategoryGridPane extends GridPane {
 
     );
 
-    public CategoryGridPane(int columns) {
+    public CategoryGridPane(int columns, VBox content) {
         int kolumny = Math.min(Math.max(3, columns), 10);
         int wiersze = (int) Math.ceil((double) categories.size() / kolumny);
 
@@ -58,7 +58,7 @@ public class CategoryGridPane extends GridPane {
         // dzieci
         int i = 0;
         for (String[] category : categories) {
-            CategoryTile ct = new CategoryTile(category[0], category[1]);
+            CategoryTile ct = new CategoryTile(category[0], category[1], content);
             this.add(ct, i % kolumny, i / kolumny);
             i++;
         }
