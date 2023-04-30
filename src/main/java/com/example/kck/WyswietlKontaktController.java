@@ -39,6 +39,8 @@ public class WyswietlKontaktController{
     @FXML
     TextArea descriptionTextArea;
 
+    private Kontakt kontakt;
+
     private void logout(Stage stage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("StartWindow.fxml"));
         Parent root = null;
@@ -80,10 +82,20 @@ public class WyswietlKontaktController{
 
     public void deleteButtonAction(ActionEvent event) throws IOException {
         System.out.println("Delete");
+        DBMenager dbMenager = new DBMenager();
+        dbMenager.deleteContact(kontakt.getId());
     }
 
     public void likeButtonAction(ActionEvent event) throws IOException {
         System.out.println("Like");
+        DBMenager dbMenager = new DBMenager();
+
+        if(dbMenager.isFavoriteContact(Settings.getInstance().getUser(), kontakt.getId())){
+            dbMenager.deleteFavouriteContact(kontakt.getId());
+        }
+        else{
+            dbMenager.insertUlubione(Settings.getInstance().getUser(), kontakt);
+        }
     }
 
     public void gearButtonAction(MouseEvent event) {
@@ -119,6 +131,7 @@ public class WyswietlKontaktController{
 
     public void initialize(Kontakt kontakt) {
         Platform.runLater(() -> {
+            this.kontakt = kontakt;
             userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);
             login.setText(Settings.getInstance().getUser().getLogin());
             nameText.setText(kontakt.getImie());

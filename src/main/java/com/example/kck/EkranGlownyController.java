@@ -103,6 +103,49 @@ public class EkranGlownyController implements Initializable {
         contextMenu.show(gear, event.getScreenX(), event.getScreenY());
     }
 
+    public void ulubioneButtonAction(MouseEvent event){
+        if(Settings.getInstance().isFavourite())
+            Settings.getInstance().setFavourite(false);
+        else
+            Settings.getInstance().setFavourite(true);
+        showList();
+    }
+
+    private void loadContacts(){
+        DBMenager dbMenager = new DBMenager();
+        List<Kontakt> kontakty = dbMenager.selectContacts(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage());
+        for(int i = 0; i < kontakty.size(); i++){
+            Kontakt kontakt = kontakty.get(i);
+            KontaktGridPane kontaktGridPane = new KontaktGridPane(kontakt);
+            content.getChildren().add(kontaktGridPane);
+        }
+    }
+    private void loadFavouriteContacts(){
+        DBMenager dbMenager = new DBMenager();
+        List<Kontakt> kontakty = dbMenager.selectFavoriteContacts();
+        for(int i = 0; i < kontakty.size(); i++){
+            Kontakt kontakt = kontakty.get(i);
+            KontaktGridPane kontaktGridPane = new KontaktGridPane(kontakt);
+            content.getChildren().add(kontaktGridPane);
+        }
+    }
+
+    private void showList(){
+        PageSelector ps = new PageSelector();
+        PageSelector ps2 = new PageSelector();
+        KontaktGridPane header = new KontaktGridPane();
+        content.getChildren().clear();
+        content.getChildren().add(ps);
+        content.getChildren().add(header);
+
+        if(Settings.getInstance().isFavourite())
+            loadFavouriteContacts();
+        else
+            loadContacts();
+
+        content.getChildren().add(ps2);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -111,21 +154,9 @@ public class EkranGlownyController implements Initializable {
                 content.setPadding(new Insets(0,10,0,10));
                 userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);
                 login.setText(Settings.getInstance().getUser().getLogin());
+                content.getChildren().clear();
+                showList();
 
-                PageSelector ps = new PageSelector();
-                PageSelector ps2 = new PageSelector();
-                KontaktGridPane header = new KontaktGridPane();
-                content.getChildren().add(ps);
-                content.getChildren().add(header);
-
-                DBMenager dbMenager = new DBMenager();
-                List<Kontakt> kontakty = dbMenager.selectContacts(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage());
-                for(int i = 0; i < kontakty.size(); i++){
-                    Kontakt kontakt = kontakty.get(i);
-                    KontaktGridPane kontaktGridPane = new KontaktGridPane(kontakt);
-                    content.getChildren().add(kontaktGridPane);
-                }
-                content.getChildren().add(ps2);
             } catch (Exception e) {
                 e.printStackTrace();
             }

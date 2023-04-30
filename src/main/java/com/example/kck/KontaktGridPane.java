@@ -82,6 +82,7 @@ public class KontaktGridPane extends GridPane {
 
 
 
+
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

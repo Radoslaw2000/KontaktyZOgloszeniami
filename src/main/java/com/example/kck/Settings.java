@@ -9,6 +9,7 @@ public class Settings {
     private User user;
     private int pageNumber;
     private int contactsNumberOnPage;
+    private boolean favourite;
 
     private Settings() {
         pageNumber = 1;
@@ -52,5 +53,13 @@ public class Settings {
 
     public void setContactsNumberOnPage(int contactsNumberOnPage) {
         this.contactsNumberOnPage = contactsNumberOnPage;
+    }
+
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
     }
 }

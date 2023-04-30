@@ -83,6 +83,34 @@ public class DBMenager
         }
     }
 
+    public void insertUlubione(User user, Kontakt kontakt) {
+        String sql = "INSERT INTO UlubionyKontakt (uzytkownikID, kontaktID) VALUES (?, ?)";
+        int userID = selectUserIdByLogin(user.getLogin());
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, String.valueOf(userID));
+            pstmt.setString(2, String.valueOf(kontakt.getId()));
+            pstmt.executeUpdate(); // wykonaj zapytanie
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public int selectUserIdByLogin(String login) {
+        String sql = "SELECT uzytkownikID FROM Uzytkownik WHERE login = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, login);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("uzytkownikID");
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return -1; // gdy nie znaleziono użytkownika
+    }
+
     public List<Kontakt> selectContacts() {
         List<Kontakt> kontakty = new ArrayList<>();
         String sql = "SELECT * FROM Kontakt";
@@ -90,6 +118,7 @@ public class DBMenager
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Kontakt kontakt = new Kontakt();
+                kontakt.setId(rs.getInt("kontaktID"));
                 kontakt.setImie(rs.getString("imie"));
                 kontakt.setNazwisko(rs.getString("nazwisko"));
                 kontakt.setNrTelefonu(rs.getString("nrtelefonu"));
@@ -116,6 +145,7 @@ public class DBMenager
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Kontakt kontakt = new Kontakt();
+                kontakt.setId(rs.getInt("kontaktID"));
                 kontakt.setImie(rs.getString("imie"));
                 kontakt.setNazwisko(rs.getString("nazwisko"));
                 kontakt.setNrTelefonu(rs.getString("nrtelefonu"));
@@ -133,19 +163,105 @@ public class DBMenager
         return null;
     }
 
+    public boolean isFavoriteContact(User user, int kontaktID) {
+        String sql = "SELECT * FROM UlubionyKontakt WHERE uzytkownikID = ? AND kontaktID = ?";
+        int userID = selectUserIdByLogin(user.getLogin());
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userID);
+            pstmt.setInt(2, kontaktID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+
+    public void deleteFavoriteContact(User user, int kontaktID) {
+        String sql = "DELETE FROM UlubionyKontakt WHERE uzytkownikID = ? AND kontaktID = ?";
+        int userID = selectUserIdByLogin(user.getLogin());
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userID);
+            pstmt.setInt(2, kontaktID);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public List<Kontakt> selectFavoriteContacts() {
+        String login = Settings.getInstance().getUser().getLogin();
+        int pageNumber = Settings.getInstance().getPageNumber();
+        int contactsNumberOnPage = Settings.getInstance().getContactsNumberOnPage();
+        int userID = selectUserIdByLogin(login);
+
+        List<Kontakt> favoriteContacts = new ArrayList<>();
+        int startIndex = (pageNumber - 1) * contactsNumberOnPage;
+        String sql = "SELECT k.* FROM Kontakt k JOIN UlubionyKontakt uk ON k.kontaktID = uk.kontaktID WHERE uk.uzytkownikID = ? LIMIT ?,?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userID);
+            pstmt.setInt(2, startIndex);
+            pstmt.setInt(3, contactsNumberOnPage);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Kontakt kontakt = new Kontakt();
+                kontakt.setId(rs.getInt("kontaktID"));
+                kontakt.setImie(rs.getString("imie"));
+                kontakt.setNazwisko(rs.getString("nazwisko"));
+                kontakt.setNrTelefonu(rs.getString("nrtelefonu"));
+                kontakt.setEmail(rs.getString("email"));
+                kontakt.setMiejscowosc(rs.getString("miejscowosc"));
+                kontakt.setUlica(rs.getString("ulica"));
+                kontakt.setNrDomu(rs.getString("nrdomu"));
+                kontakt.setOpis(rs.getString("opis"));
+                favoriteContacts.add(kontakt);
+            }
+            return favoriteContacts;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public void deleteContact(int contactId) {
+        String sql = "DELETE FROM Kontakt WHERE kontaktID = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, contactId);
+            pstmt.executeUpdate();
+            deleteContactCascadeFavourites(contactId);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void deleteContactCascadeFavourites(int contactId) {
+        String sql = "DELETE FROM UlubionyKontakt WHERE kontaktID = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, contactId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void deleteFavouriteContact(int contactId) {
+        String login = Settings.getInstance().getUser().getLogin();
+        int userID = selectUserIdByLogin(login);
+
+        String sql = "DELETE FROM UlubionyKontakt WHERE kontaktID = ? AND uzytkownikID = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, contactId);
+            pstmt.setInt(2, userID);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+
 
 
 }
-/*
-    while (rs.next()) {
-        System.out.println("Imię: " + rs.getString("imie"));
-        System.out.println("Nazwisko: " + rs.getString("nazwisko"));
-        System.out.println("Numer telefonu: " + rs.getString("nrtelefonu"));
-        System.out.println("Email: " + rs.getString("email"));
-        System.out.println("Miejscowość: " + rs.getString("miejscowosc"));
-        System.out.println("Ulica: " + rs.getString("ulica"));
-        System.out.println("Numer domu: " + rs.getString("nrdomu"));
-        System.out.println("Opis: " + rs.getString("opis"));
-        System.out.println("-----------------------------");
-    }
-     */
