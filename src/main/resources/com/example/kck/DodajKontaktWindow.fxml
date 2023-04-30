@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -43,6 +44,11 @@
                <content>
                   <VBox fx:id="katalogi" alignment="TOP_CENTER" maxWidth="270.0" minWidth="180.0" prefWidth="200.0">
                      <children>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Ulubione" textAlignment="CENTER">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Rodzina" textAlignment="CENTER">
                            <font>
                               <Font size="14.0" />
@@ -54,11 +60,6 @@
                            </font>
                         </Button>
                         <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Praca" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Ulubione" textAlignment="CENTER">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -82,7 +83,7 @@
                         <Image url="@R.png" />
                      </image>
                   </ImageView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Radosław" textAlignment="CENTER" GridPane.columnIndex="1">
+                  <Text fx:id="login" strokeType="OUTSIDE" strokeWidth="0.0" text="Radosław" textAlignment="CENTER" GridPane.columnIndex="1">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -115,7 +116,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Dodawanie Kontaktu">
+                  <Text fx:id="tytul" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Dodawanie Kontaktu">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -125,7 +126,7 @@
                   </Text>
                   <HBox maxHeight="40.0" prefHeight="30.0" spacing="10.0" GridPane.columnIndex="2">
                      <children>
-                        <Button mnemonicParsing="false" styleClass="save-button" text="Zapisz">
+                        <Button mnemonicParsing="false" onAction="#zapiszButtonAction" styleClass="save-button" text="Zapisz">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -189,22 +190,22 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Text>
-                        <TextField maxHeight="40.0" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1">
+                        <TextField fx:id="nameTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="surnameTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <TextField fx:id="emailTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="5.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <TextField fx:id="townTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets left="5.0" right="10.0" />
                            </GridPane.margin>
@@ -238,26 +239,53 @@
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <TextField maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="phoneNumberTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <TextField fx:id="streetTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <TextField fx:id="homeNumberTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets left="5.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextArea maxWidth="500.0" minWidth="80.0" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <TextArea fx:id="descriptionTextArea" maxWidth="500.0" minWidth="80.0" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <GridPane.margin>
                               <Insets left="5.0" right="15.0" />
                            </GridPane.margin>
                         </TextArea>
+                        <StackPane fx:id="message1" prefHeight="150.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Text fill="#ff1313" strokeType="OUTSIDE" strokeWidth="0.0" text="Podaj nazwisko właściciela">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="message2" prefHeight="150.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <Text fill="#ff1313" strokeType="OUTSIDE" strokeWidth="0.0" text="Podaj numer telefonu">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="message3" prefHeight="150.0" prefWidth="200.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <children>
+                              <Text fill="#ff1313" strokeType="OUTSIDE" strokeWidth="0.0" text="Podaj miejscowość">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </StackPane>
                      </children>
                   </GridPane>
                </content>

@@ -6,9 +6,14 @@ public class Settings {
 
     private static Settings instance;
     private Stage stage;
-    private String login;
+    private User user;
+    private int pageNumber;
+    private int contactsNumberOnPage;
 
-    private Settings() {}
+    private Settings() {
+        pageNumber = 1;
+        contactsNumberOnPage = 20;
+    }
 
     public static Settings getInstance() {
         if (instance == null) {
@@ -25,11 +30,27 @@ public class Settings {
         return stage;
     }
 
-    public String getLogin() {
-        return login;
+    public User getUser() {
+        return user;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public int getContactsNumberOnPage() {
+        return contactsNumberOnPage;
+    }
+
+    public void setContactsNumberOnPage(int contactsNumberOnPage) {
+        this.contactsNumberOnPage = contactsNumberOnPage;
     }
 }

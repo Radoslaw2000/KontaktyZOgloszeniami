@@ -39,7 +39,8 @@ public class LoginWindowController {
         }
 
         DBMenager dbMenager = new DBMenager();
-        if(!dbMenager.logInUser(login, password)){
+        User user = dbMenager.logInUser(login, password);
+        if(user == null){
             message.setText("Błędny login lub hasło");
             message.setVisible(true);
             PauseTransition pause = new PauseTransition(Duration.millis(3000));
@@ -72,13 +73,13 @@ public class LoginWindowController {
                 stage.setScene(scene);
             }
             else {
-                Scene scene = new Scene(root);
+                Scene scene = new Scene(root, 800, 400);
                 stage.setScene(scene);
                 Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
                 stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
                 stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
             }
-            Settings.getInstance().setLogin(login);
+            Settings.getInstance().setUser(user);
             stage.show();
         });
         pause.play();

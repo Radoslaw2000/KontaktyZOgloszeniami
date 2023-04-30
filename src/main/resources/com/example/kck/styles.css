@@ -122,27 +122,13 @@
 }
 
 
-#katalogi Button {
-  -fx-background-color: #eee;
-  -fx-text-fill: #333;
-  -fx-font-size: 14px;
-  -fx-padding: 10px;
-  -fx-background-radius: 0;
-}
-#katalogi Button:hover {
-  -fx-background-color: #ccc;
-  -fx-text-fill: white;
-  -fx-font-weight: bold;
-  -fx-cursor: hand;
-}
-#katalogi Button:pressed  {
-  -fx-background-color: linear-gradient(to top, #ccc, #aaa);
-}
+
+
 
 .dodaj-kontakt-button {
   -fx-background-color: #eee;
   -fx-text-fill: #333;
-  -fx-font-size: 14px;
+  -fx-font-size: 16px;
   -fx-background-radius: 0;
 }
 .dodaj-kontakt-button:hover {
@@ -168,17 +154,32 @@
    -fx-background-color: #ccc;
    -fx-cursor: hand;
 }
-
+.kontakt-header {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
 
 .settings-button:hover {
     -fx-cursor: hand;
 }
 
+.page-text {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+.page-text:hover {
+    -fx-cursor: hand;
+}
+.page-text:pressed  {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+
 .category-text {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
 }
-
 .category-tile {
     -fx-margin: 10px;
     -fx-background-color: #f0f0f0;
@@ -187,7 +188,6 @@
     -fx-border-width: 1px;
     -fx-border-radius: 7px;
 }
-
 .category-tile:hover {
     -fx-background-color: #e6e6e6;
     -fx-cursor: hand;
@@ -202,5 +202,13 @@
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-border-style: none;
+}
+
+.text-area {
+    text-area-background: transparent ;
+}
+.text-area .content {
+    -fx-background-color: text-area-background ;
     -fx-border-style: none;
 }

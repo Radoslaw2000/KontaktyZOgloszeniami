@@ -8,6 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -41,31 +42,34 @@
                <content>
                   <VBox fx:id="katalogi" alignment="TOP_CENTER" maxWidth="270.0" minWidth="180.0" prefWidth="200.0">
                      <children>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Rodzina" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Przyjaciele" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Praca" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="30.0" text="Ulubione" textAlignment="CENTER">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
+                         <HBox alignment="CENTER" onMouseClicked="#dodajKontaktButtonAction" prefHeight="40.0" styleClass="dodaj-kontakt-button">
+                             <children>
+                                 <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                     <image>
+                                         <Image url="@add-contact.png" />
+                                     </image>
+                                 </ImageView>
+                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dodaj-kontakt-button" text="Dodaj kontakt">
+                                     <font>
+                                         <Font size="16.0" />
+                                     </font>
+                                 </Text>
+                             </children>
+                         </HBox>
+                         <HBox alignment="CENTER" prefHeight="40.0" styleClass="dodaj-kontakt-button">
+                             <children>
+                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dodaj-kontakt-button" text="Ulubione">
+                                     <font>
+                                         <Font size="16.0" />
+                                     </font>
+                                 </Text>
+                             </children>
+                         </HBox>
                      </children>
                   </VBox>
                </content>
             </ScrollPane>
-            <GridPane prefHeight="40.0" prefWidth="172.0" GridPane.rowIndex="2">
+            <GridPane fx:id="userPanel" prefHeight="40.0" prefWidth="172.0" GridPane.rowIndex="2">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="40.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
@@ -75,12 +79,7 @@
                 <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@R.png" />
-                     </image>
-                  </ImageView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Radosław" textAlignment="CENTER" GridPane.columnIndex="1">
+                  <Text fx:id="login" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" GridPane.columnIndex="1">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -124,7 +123,7 @@
                   <GridPane prefWidth="448.0">
                      <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="ALWAYS" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -191,7 +190,7 @@
                               <Font size="18.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets right="10.0" />
+                              <Insets right="10.0" top="5.0" />
                            </GridPane.margin>
                         </Text>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Telefon:" GridPane.rowIndex="3">
@@ -202,63 +201,69 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Text>
-                        <TextArea editable="false" maxWidth="500.0" minWidth="80.0" prefHeight="80.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                           <GridPane.margin>
-                              <Insets left="5.0" right="15.0" />
-                           </GridPane.margin>
-                        </TextArea>
+                         <TextArea fx:id="descriptionTextArea" editable="false" maxWidth="500.0" minWidth="80.0" prefHeight="80.0" styleClass="text-area" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                             <GridPane.margin>
+                                 <Insets left="5.0" right="15.0" />
+                             </GridPane.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                         </TextArea>
                         <GridPane GridPane.columnIndex="1">
                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="65.0" />
-                            <ColumnConstraints fillWidth="false" hgrow="NEVER" minWidth="10.0" prefWidth="70.0" />
-                              <ColumnConstraints hgrow="NEVER" minWidth="10.0" prefWidth="60.0" />
+                              <ColumnConstraints hgrow="ALWAYS" />
+                            <ColumnConstraints hgrow="NEVER" maxWidth="70.0" prefWidth="70.0" />
+                            <ColumnConstraints fillWidth="false" hgrow="NEVER" maxWidth="70.0" prefWidth="70.0" />
+                              <ColumnConstraints hgrow="NEVER" maxWidth="70.0" prefWidth="70.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" styleClass="edit-button" text="Edytuj" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" styleClass="group-button" text="Grupuj" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" styleClass="delete-button" text="Usuń" GridPane.columnIndex="3" />
+                              <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" styleClass="edit-button" text="Edytuj" visible="false" GridPane.columnIndex="1" />
+                              <Button fx:id="likeButton" mnemonicParsing="false" onAction="#likeButtonAction" styleClass="group-button" text="Polub" GridPane.columnIndex="3" />
+                              <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonAction" styleClass="delete-button" text="Usuń" visible="false" GridPane.columnIndex="2" />
                            </children>
                         </GridPane>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TextRoboczy" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TextRoboczy" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Text fx:id="surnameText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TextRoboczy" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Text fx:id="phoneNumberText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TextRoboczy" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Text fx:id="emailText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TextRoboczy" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <Text fx:id="townText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TextRoboczy" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <Text fx:id="streetText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TextRoboczy" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                        <Text fx:id="homeNumberText" strokeType="OUTSIDE" strokeWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
                      </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
                   </GridPane>
                </content>
             </ScrollPane>

@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -12,6 +13,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -19,11 +21,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class EkranGlownyController implements Initializable {
     @FXML
     VBox content;
+
+    @FXML
+    GridPane userPanel;
     @FXML
     ImageView gear;
     @FXML
@@ -102,12 +108,24 @@ public class EkranGlownyController implements Initializable {
 
         Platform.runLater(()->{
             try {
-                login.setText(Settings.getInstance().getLogin());
-                KontaktGridPane kontaktGridPane = new KontaktGridPane();
-                for(int i = 0; i<10; i++){
+                content.setPadding(new Insets(0,10,0,10));
+                userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);
+                login.setText(Settings.getInstance().getUser().getLogin());
+
+                PageSelector ps = new PageSelector();
+                PageSelector ps2 = new PageSelector();
+                KontaktGridPane header = new KontaktGridPane();
+                content.getChildren().add(ps);
+                content.getChildren().add(header);
+
+                DBMenager dbMenager = new DBMenager();
+                List<Kontakt> kontakty = dbMenager.selectContacts(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage());
+                for(int i = 0; i < kontakty.size(); i++){
+                    Kontakt kontakt = kontakty.get(i);
+                    KontaktGridPane kontaktGridPane = new KontaktGridPane(kontakt);
                     content.getChildren().add(kontaktGridPane);
-                    kontaktGridPane = new KontaktGridPane();
                 }
+                content.getChildren().add(ps2);
             } catch (Exception e) {
                 e.printStackTrace();
             }
