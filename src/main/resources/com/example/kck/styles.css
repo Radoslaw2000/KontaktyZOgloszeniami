@@ -212,3 +212,41 @@
     -fx-background-color: text-area-background ;
     -fx-border-style: none;
 }
+
+.filtry-button {
+    -fx-background-color: #1e7fff;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-text-fill: #fff;
+    -fx-padding: 7px;
+    -fx-border-color: #333;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4;
+}
+.filtry-button:hover {
+    -fx-background-color: #1b6fdb;
+    -fx-cursor: hand;
+}
+.filtry-button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+.clear-button {
+    -fx-background-color: #e7e4e4;
+    -fx-background-radius: 5;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-padding: 7px;
+    -fx-border-color: #333;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4;
+}
+.clear-button:hover {
+    -fx-background-color: #dbd6d6;
+    -fx-cursor: hand;
+}
+.clear-button:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}

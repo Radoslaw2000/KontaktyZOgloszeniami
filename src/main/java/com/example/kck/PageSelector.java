@@ -1,19 +1,23 @@
 package com.example.kck;
 
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 public class PageSelector extends GridPane {
 
-    private Text pageNumber;
+    private Text increse, decrese;
 
     public PageSelector() {
         ColumnConstraints column1 = new ColumnConstraints();
@@ -47,31 +51,41 @@ public class PageSelector extends GridPane {
 
         getRowConstraints().add(row);
 
-        pageNumber = new Text("1");
+        Text pageNumber = new Text(String.valueOf(Settings.getInstance().getPageNumber()));
         pageNumber.setStrokeType(StrokeType.OUTSIDE);
         pageNumber.setFont(new Font(16.0));
         setColumnIndex(pageNumber, 2);
         getChildren().add(pageNumber);
 
-        Text text2 = new Text("<<");
-        text2.setStrokeType(StrokeType.OUTSIDE);
-        text2.getStyleClass().add("page-text");
-        setColumnIndex(text2, 1);
-        getChildren().add(text2);
+        decrese = new Text("<<");
+        decrese.setStrokeType(StrokeType.OUTSIDE);
+        decrese.getStyleClass().add("page-text");
+        setColumnIndex(decrese, 1);
+        getChildren().add(decrese);
 
-        Text text3 = new Text(">>");
-        text3.setStrokeType(StrokeType.OUTSIDE);
-        text3.getStyleClass().add("page-text");
-        setColumnIndex(text3, 3);
-        getChildren().add(text3);
+        increse = new Text(">>");
+        increse.setStrokeType(StrokeType.OUTSIDE);
+        increse.getStyleClass().add("page-text");
+        setColumnIndex(increse, 3);
+        getChildren().add(increse);
+
     }
 
-    public int getPageNumber() {
-        String pageText = pageNumber.getText();
-        return Integer.parseInt(pageText);
+    public void  increse(){
+        Settings.getInstance().setPageNumber(Settings.getInstance().getPageNumber() + 1);
     }
 
-    public void setPageNumber(int pageNumber) {
-        this.pageNumber.setText(String.valueOf(pageNumber));
+    public void decrese(){
+        if(Settings.getInstance().getPageNumber() > 1){
+            Settings.getInstance().setPageNumber(Settings.getInstance().getPageNumber() - 1);
+        }
     }
+    public Text getIncrese() {
+        return increse;
+    }
+
+    public Text getDecrese() {
+        return decrese;
+    }
+
 }

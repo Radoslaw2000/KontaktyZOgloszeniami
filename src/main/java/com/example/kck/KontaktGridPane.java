@@ -4,7 +4,6 @@ import com.example.kck.controllers.WyswietlKontaktController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.geometry.Insets;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -80,6 +78,8 @@ public class KontaktGridPane extends GridPane {
 
         LetterCircle imageView = new LetterCircle(kontakt.getNazwisko().charAt(0));
         this.add(imageView, 0, 0);
+
+
 
 
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {

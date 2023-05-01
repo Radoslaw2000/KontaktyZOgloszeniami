@@ -163,6 +163,133 @@ public class DBMenager
         return null;
     }
 
+    public List<Kontakt> selectContactsFiltered(int pageNumber, int contactsNumberOnPage,
+                                                String generalText, String nameText, String surnameText, String emailText,
+                                                String townText, String phoneNumberText, String streetText, String homeNumberText,
+                                                String descriptionText) {
+
+        List<Kontakt> kontakty = new ArrayList<>();
+        int startIndex = (pageNumber - 1) * contactsNumberOnPage;
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT * FROM Kontakt WHERE ");
+        boolean whereClauseAdded = false;
+
+        if (!generalText.isEmpty()) {
+            sqlBuilder.append("(imie LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("nazwisko LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("nrtelefonu LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("email LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("miejscowosc LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("ulica LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("nrdomu LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("opis LIKE '%").append(generalText).append("%')");
+            whereClauseAdded = true;
+        }
+        if (!nameText.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("imie LIKE '%").append(nameText).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!surnameText.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("nazwisko LIKE '%").append(surnameText).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!phoneNumberText.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("nrtelefonu LIKE '%").append(phoneNumberText).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!emailText.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("email LIKE '%").append(emailText).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!townText.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("miejscowosc LIKE '%").append(townText).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!streetText.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("ulica LIKE '%").append(streetText).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!homeNumberText.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("nrdomu LIKE '%").append(homeNumberText).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!descriptionText.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("opis LIKE '%").append(descriptionText).append("%'");
+            whereClauseAdded = true;
+        }
+        if(!whereClauseAdded)
+            sqlBuilder.append(" 1 ");
+        sqlBuilder.append(" ORDER BY nazwisko LIMIT ").append(startIndex).append(", ").append(contactsNumberOnPage);
+
+        String sql = sqlBuilder.toString();
+        //System.out.println(sql);
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Kontakt kontakt = new Kontakt();
+                kontakt.setId(rs.getInt("kontaktID"));
+                kontakt.setImie(rs.getString("imie"));
+                kontakt.setNazwisko(rs.getString("nazwisko"));
+                kontakt.setNrTelefonu(rs.getString("nrtelefonu"));
+                kontakt.setEmail(rs.getString("email"));
+                kontakt.setMiejscowosc(rs.getString("miejscowosc"));
+                kontakt.setUlica(rs.getString("ulica"));
+                kontakt.setNrDomu(rs.getString("nrdomu"));
+                kontakt.setOpis(rs.getString("opis"));
+                kontakty.add(kontakt);
+            }
+            return kontakty;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+
+        public void updateContact(int contactID, String name, String surname, String phoneNumber, String email, String town, String street, String homeNumber, String description) {
+        String sql = "UPDATE Kontakt SET imie = ?, nazwisko = ?, nrtelefonu = ?, email = ?, miejscowosc = ?, ulica = ?, nrdomu = ?, opis = ? WHERE kontaktID = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, surname);
+            pstmt.setString(3, phoneNumber);
+            pstmt.setString(4, email);
+            pstmt.setString(5, town);
+            pstmt.setString(6, street);
+            pstmt.setString(7, homeNumber);
+            pstmt.setString(8, description);
+            pstmt.setInt(9, contactID);
+            pstmt.executeUpdate(); // wykonaj zapytanie
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
     public boolean isFavoriteContact(User user, int kontaktID) {
         String sql = "SELECT * FROM UlubionyKontakt WHERE uzytkownikID = ? AND kontaktID = ?";
         int userID = selectUserIdByLogin(user.getLogin());

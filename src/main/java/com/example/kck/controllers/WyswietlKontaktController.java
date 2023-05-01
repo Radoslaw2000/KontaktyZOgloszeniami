@@ -47,8 +47,34 @@ public class WyswietlKontaktController{
         ss.switchScene("DodajKontaktWindow.fxml");
     }
 
+    public void ulubioneButtonAction(MouseEvent event){
+        Settings.getInstance().setPageNumber(1);
+        Settings.getInstance().setFavourite(true);
+        SceneSwitcher ss = new SceneSwitcher();
+        ss.switchScene("MainWindow.fxml");
+    }
+
     public void editButtonAction(ActionEvent event) throws IOException {
         System.out.println("Edit");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        double sceneWidth = ((Node) event.getSource()).getScene().getWidth();
+        double sceneHeight = ((Node) event.getSource()).getScene().getHeight();
+
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/kck/EdytujKontaktWindow.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Scene scene = new Scene(root, sceneWidth, sceneHeight);
+            stage.setScene(scene);
+
+            EdytujKontaktController controller = loader.getController();
+            controller.initialize(kontakt);
+            stage.show();
+        });
     }
 
     public void deleteButtonAction(ActionEvent event) throws IOException {
@@ -69,6 +95,7 @@ public class WyswietlKontaktController{
         }
     }
 
+
     public void gearButtonAction(MouseEvent event) {
         new GearOptions(event, gear);
     }
@@ -81,6 +108,7 @@ public class WyswietlKontaktController{
         this.kontakt = kontakt;
         userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);
         login.setText(Settings.getInstance().getUser().getLogin());
+
         nameText.setText(kontakt.getImie());
         surnameText.setText(kontakt.getNazwisko());
         emailText.setText(kontakt.getEmail());
@@ -94,6 +122,5 @@ public class WyswietlKontaktController{
             editButton.setVisible(true);
             deleteButton.setVisible(true);
         }
-
     }
 }
