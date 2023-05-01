@@ -13,7 +13,7 @@ public class Ksiazka extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Ksiazka.class.getResource("StartWindow.fxml"));
        // FXMLLoader fxmlLoader = new FXMLLoader(Ksiazka.class.getResource("MainWindow2.fxml"));
-        final double initialSceneWidth = 600;
+        final double initialSceneWidth = 800;
         final double initialSceneHeight = 500;
         Scene scene = new Scene(fxmlLoader.load(), initialSceneWidth, initialSceneHeight);
         stage.setTitle("Ksiazka telefoniczna");

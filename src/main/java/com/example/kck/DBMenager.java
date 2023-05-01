@@ -8,7 +8,7 @@ public class DBMenager
 {
     private Connection conn;
 
-    DBMenager(){
+    public DBMenager(){
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:baza.db");
         } catch (SQLException e){

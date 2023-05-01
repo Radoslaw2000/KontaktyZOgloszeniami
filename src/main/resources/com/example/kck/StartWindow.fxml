@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" styleClass="login-background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.kck.StartWindowController">
+<GridPane prefHeight="400.0" prefWidth="600.0" styleClass="login-background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.kck.controllers.StartWindowController">
   <columnConstraints>
     <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="ALWAYS" />
   </columnConstraints>
