@@ -116,7 +116,15 @@
                        <GridPane.margin>
                            <Insets right="20.0" />
                        </GridPane.margin></Button>
+                  <Text fx:id="tytul" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Text>
                </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </GridPane>
             <ScrollPane fitToWidth="true" GridPane.rowIndex="1">
                <content>
@@ -220,7 +228,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" styleClass="edit-button" text="Edytuj" visible="false" GridPane.columnIndex="1" />
+                              <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonAction" styleClass="save-button" text="Edytuj" visible="false" GridPane.columnIndex="1" />
                               <Button fx:id="likeButton" mnemonicParsing="false" onAction="#likeButtonAction" styleClass="group-button" text="Polub" GridPane.columnIndex="3" />
                               <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonAction" styleClass="delete-button" text="Usuń" visible="false" GridPane.columnIndex="2" />
                            </children>

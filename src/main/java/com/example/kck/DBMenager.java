@@ -83,6 +83,24 @@ public class DBMenager
         }
     }
 
+    public void przywrocContact(Kontakt kontakt) {
+    String sql = "INSERT INTO Kontakt (kontaktID, imie, nazwisko, nrtelefonu, email, miejscowosc, ulica, nrdomu, opis) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setInt(1, kontakt.getId());
+        pstmt.setString(2, kontakt.getImie());
+        pstmt.setString(3, kontakt.getNazwisko());
+        pstmt.setString(4, kontakt.getNrTelefonu());
+        pstmt.setString(5, kontakt.getEmail());
+        pstmt.setString(6, kontakt.getMiejscowosc());
+        pstmt.setString(7, kontakt.getUlica());
+        pstmt.setString(8, kontakt.getNrDomu());
+        pstmt.setString(9, kontakt.getOpis());
+        pstmt.executeUpdate(); // wykonaj zapytanie
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+}
+
     public void insertUlubione(User user, Kontakt kontakt) {
         String sql = "INSERT INTO UlubionyKontakt (uzytkownikID, kontaktID) VALUES (?, ?)";
         int userID = selectUserIdByLogin(user.getLogin());

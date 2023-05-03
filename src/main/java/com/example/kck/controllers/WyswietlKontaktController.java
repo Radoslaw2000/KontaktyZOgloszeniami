@@ -1,6 +1,7 @@
 package com.example.kck.controllers;
 
 import com.example.kck.*;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,9 +16,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,12 +38,14 @@ public class WyswietlKontaktController{
     GridPane userPanel;
 
     @FXML
-    Text login, nameText, surnameText, emailText, townText, phoneNumberText, streetText, homeNumberText;
+    Text tytul, login, nameText, surnameText, emailText, townText, phoneNumberText, streetText, homeNumberText;
 
     @FXML
     TextArea descriptionTextArea;
 
     private Kontakt kontakt;
+
+    private boolean isDeleted;
 
     public void dodajKontaktButtonAction(MouseEvent event) {
         SceneSwitcher ss = new SceneSwitcher();
@@ -78,21 +83,47 @@ public class WyswietlKontaktController{
     }
 
     public void deleteButtonAction(ActionEvent event) throws IOException {
-        System.out.println("Delete");
+        tytul.setFill(Color.rgb(51, 204, 51));
         DBMenager dbMenager = new DBMenager();
-        dbMenager.deleteContact(kontakt.getId());
+        PauseTransition pause = new PauseTransition(Duration.millis(1500));
+        pause.setOnFinished(event1 -> tytul.setVisible(false));
+
+        if(!isDeleted){
+            dbMenager.deleteContact(kontakt.getId());
+            tytul.setText("Usunięto kontakt");
+            tytul.setVisible(true);
+            isDeleted = true;
+            ////aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        }
+        else{
+            dbMenager.przywrocContact(kontakt);
+            tytul.setText("Przywrócono kontakt");
+            tytul.setVisible(true);
+            isDeleted = false;
+        }
+        pause.play();
+
     }
 
     public void likeButtonAction(ActionEvent event) throws IOException {
         System.out.println("Like");
         DBMenager dbMenager = new DBMenager();
+        PauseTransition pause = new PauseTransition(Duration.millis(1500));
+        pause.setOnFinished(event1 -> tytul.setVisible(false));
 
         if(dbMenager.isFavoriteContact(Settings.getInstance().getUser(), kontakt.getId())){
             dbMenager.deleteFavouriteContact(kontakt.getId());
+            tytul.setFill(Color.rgb(234, 27, 48));
+            tytul.setText("Usunięto z ulubionych");
+            tytul.setVisible(true);
         }
         else{
             dbMenager.insertUlubione(Settings.getInstance().getUser(), kontakt);
+            tytul.setFill(Color.rgb(51, 204, 51));
+            tytul.setText("Dodano do ulubionych");
+            tytul.setVisible(true);
         }
+        pause.play();
     }
 
 
@@ -105,6 +136,7 @@ public class WyswietlKontaktController{
     }
 
     public void initialize(Kontakt kontakt) {
+        isDeleted = false;
         this.kontakt = kontakt;
         userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);
         login.setText(Settings.getInstance().getUser().getLogin());

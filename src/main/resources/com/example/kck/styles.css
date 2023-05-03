@@ -74,7 +74,7 @@
 }
 
 .edit-button {
--fx-background-color: #5cb85c; /* kolor zielony kojarzący się z pozytywną akcją */
+-fx-background-color: #5cb85c;
 -fx-background-radius: 5;
 -fx-font-size: 14px;
 -fx-text-fill: #fff;
@@ -90,7 +90,7 @@
 }
 
 .group-button {
--fx-background-color: #f0ad4e; /* kolor pomarańczowy kojarzący się z akcją grupowania */
+-fx-background-color: #f0ad4e;
 -fx-background-radius: 5;
 -fx-font-size: 14px;
 -fx-text-fill: #fff;
@@ -106,7 +106,7 @@
 }
 
 .delete-button {
--fx-background-color: #d9534f; /* kolor czerwony kojarzący się z akcją usunięcia */
+-fx-background-color: #d9534f;
 -fx-background-radius: 5;
 -fx-font-size: 14px;
 -fx-text-fill: #fff;
