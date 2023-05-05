@@ -79,7 +79,7 @@ public class OgloszenieGridPane extends GridPane {
                 double sceneWidth = ((Node) event.getSource()).getScene().getWidth();
                 double sceneHeight = ((Node) event.getSource()).getScene().getHeight();
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("WyswietlOgloszenieWindow.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowAnnouncmentDetailsWindow.fxml"));
                 Parent root = null;
                 try {
                     root = loader.load();

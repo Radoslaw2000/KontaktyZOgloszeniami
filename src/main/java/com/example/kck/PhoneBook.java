@@ -8,11 +8,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Ksiazka extends Application {
+public class PhoneBook extends Application {
     @Override
 
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Ksiazka.class.getResource("StartWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(PhoneBook.class.getResource("StartWindow.fxml"));
         final double initialSceneWidth = 800;
         final double initialSceneHeight = 500;
         Scene scene = new Scene(fxmlLoader.load(), initialSceneWidth, initialSceneHeight);

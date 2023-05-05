@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class Filtry extends VBox {
+public class AnnouncmentFilter extends VBox {
 
     private TextField fromPriceField;
     private TextField toPriceField;
@@ -20,7 +20,7 @@ public class Filtry extends VBox {
     private TextField cityField;
     private MenuButton regionMenu;
 
-    public Filtry() {
+    public AnnouncmentFilter() {
 
         // Cena
         Text priceLabel = new Text("Cena:");

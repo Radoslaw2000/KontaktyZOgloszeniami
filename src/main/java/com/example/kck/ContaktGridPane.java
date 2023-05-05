@@ -1,6 +1,6 @@
 package com.example.kck;
 
-import com.example.kck.controllers.WyswietlKontaktController;
+import com.example.kck.controllers.ShowContactDetailsController;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +15,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class KontaktGridPane extends GridPane {
+public class ContaktGridPane extends GridPane {
 
-    public KontaktGridPane(Kontakt kontakt) {
+    public ContaktGridPane(Contact contact) {
         this.getStyleClass().add("kontakt");
         this.setGridLinesVisible(true);
 
@@ -52,31 +52,31 @@ public class KontaktGridPane extends GridPane {
         row1.setPrefHeight(30.0);
         this.getRowConstraints().add(row1);
 
-        Text nazwisko = new Text(kontakt.getNazwisko());
+        Text nazwisko = new Text(contact.getSurname());
         nazwisko.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         nazwisko.setStrokeWidth(0.0);
         this.add(nazwisko, 1, 0);
         GridPane.setMargin(nazwisko, new Insets(0, 0, 0, 10));
 
-        Text imie = new Text(kontakt.getImie());
+        Text imie = new Text(contact.getName());
         imie.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         imie.setStrokeWidth(0.0);
         this.add(imie, 2, 0);
         GridPane.setMargin(imie, new Insets(0, 0, 0, 10));
 
-        Text miasto = new Text(kontakt.getMiejscowosc());
+        Text miasto = new Text(contact.getTown());
         miasto.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         miasto.setStrokeWidth(0.0);
         this.add(miasto, 3, 0);
         GridPane.setMargin(miasto, new Insets(0, 0, 0, 10));
 
-        Text ulica = new Text(kontakt.getUlica());
+        Text ulica = new Text(contact.getStreet());
         ulica.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         ulica.setStrokeWidth(0.0);
         this.add(ulica, 4, 0);
         GridPane.setMargin(ulica, new Insets(0, 0, 0, 10));
 
-        LetterCircle imageView = new LetterCircle(kontakt.getNazwisko().charAt(0));
+        LetterCircle imageView = new LetterCircle(contact.getSurname().charAt(0));
         this.add(imageView, 0, 0);
 
 
@@ -90,7 +90,7 @@ public class KontaktGridPane extends GridPane {
                 double sceneHeight = ((Node) event.getSource()).getScene().getHeight();
 
                 Platform.runLater(() -> {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("WyswietlKontaktWindow.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowContactDetailsWindow.fxml"));
                     Parent root = null;
                     try {
                         root = loader.load();
@@ -100,15 +100,15 @@ public class KontaktGridPane extends GridPane {
                     Scene scene = new Scene(root, sceneWidth, sceneHeight);
                     stage.setScene(scene);
 
-                    WyswietlKontaktController controller = loader.getController();
-                    controller.initialize(kontakt);
+                    ShowContactDetailsController controller = loader.getController();
+                    controller.initialize(contact);
                     stage.show();
                 });
             }
         });
     }
 
-    public KontaktGridPane() {
+    public ContaktGridPane() {
         this.setGridLinesVisible(true);
         this.getStyleClass().add("kontakt-header");
 

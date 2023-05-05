@@ -12,7 +12,7 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EkranGlowny2Controller implements Initializable {
+public class MainWindowAnnouncmentsController implements Initializable {
     @FXML
     VBox content;
 
@@ -23,13 +23,11 @@ public class EkranGlowny2Controller implements Initializable {
     VBox katalogi;
 
     public void dodajOgloszenieButtonAction(MouseEvent event) {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("DodajOgloszenieWindow.fxml");
+        Settings.getInstance().switchScene("AddAnnouncmentWindow.fxml");
     }
 
     public void kontaktyButtonAction(MouseEvent event) {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("MainWindow.fxml");
+        Settings.getInstance().switchScene("MainWindowContacts.fxml");
     }
 
     public void gearButtonAction(MouseEvent event) {
@@ -56,7 +54,7 @@ public class EkranGlowny2Controller implements Initializable {
         Platform.runLater(() -> {
             try {
                 responsiveCategoryMenu(Settings.getInstance().getStage().getScene());
-                katalogi.getChildren().add(new Filtry());
+                katalogi.getChildren().add(new AnnouncmentFilter());
             /*
             OgloszenieGridPane ogloszenieGridPane;
             for(int i = 0; i<10; i++) {

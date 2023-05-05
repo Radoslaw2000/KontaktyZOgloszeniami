@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DodajKontaktController implements Initializable {
+public class AddContactController implements Initializable {
 
     @FXML
     TextField nameTextField, surnameTextField, emailTextField, townTextField, phoneNumberTextField, streetTextField,homeNumberTextField;
@@ -39,25 +39,27 @@ public class DodajKontaktController implements Initializable {
     Text login;
 
 
+    public void homeButtonAction(MouseEvent event){
+        Settings.getInstance().setPageNumber(1);
+        Settings.getInstance().switchScene("MainWindowContacts.fxml");
+    }
+
     public void gearButtonAction(MouseEvent event) {
         new GearOptions(event,gear);
     }
 
     public void dodajKontaktButtonAction(MouseEvent event) {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("DodajKontaktWindow.fxml");
+        Settings.getInstance().switchScene("AddContactWindow.fxml");
     }
 
     public void ulubioneButtonAction(MouseEvent event){
         Settings.getInstance().setPageNumber(1);
         Settings.getInstance().setFavourite(true);
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("MainWindow.fxml");
+        Settings.getInstance().switchScene("MainWindowContacts.fxml");
     }
 
     public void anulujButtonAction(ActionEvent event) throws IOException {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("MainWindow.fxml");
+        Settings.getInstance().switchScene("MainWindowContacts.fxml");
     }
 
     private void messageDisplay(StackPane message){
@@ -96,8 +98,7 @@ public class DodajKontaktController implements Initializable {
 
         PauseTransition pause = new PauseTransition(Duration.millis(1000));
         pause.setOnFinished(event1 -> {
-            SceneSwitcher ss = new SceneSwitcher();
-            ss.switchScene("MainWindow.fxml");
+            Settings.getInstance().switchScene("MainWindowContacts.fxml");
         });
         pause.play();
 

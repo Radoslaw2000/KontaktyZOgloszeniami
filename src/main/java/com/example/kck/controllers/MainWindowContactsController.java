@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -20,14 +21,16 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class EkranGlownyController implements Initializable {
+public class MainWindowContactsController implements Initializable {
     @FXML
     VBox content;
+
+    @FXML
+    HBox favouriteHBox;
 
     @FXML
     GridPane userPanel;
@@ -41,14 +44,18 @@ public class EkranGlownyController implements Initializable {
     @FXML
     MenuButton numberOfPagesMenu;
 
+    public void homeButtonAction(MouseEvent event){
+        Settings.getInstance().setPageNumber(1);
+        Settings.getInstance().setFavourite(false);
+        Settings.getInstance().switchScene("MainWindowContacts.fxml");
+    }
+
     public void dodajKontaktButtonAction(MouseEvent event) throws IOException {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("DodajKontaktWindow.fxml");
+        Settings.getInstance().switchScene("AddContactWindow.fxml");
     }
 
     public void ogloszeniaButtonAction(MouseEvent event) {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("MainWindow2.fxml");
+        Settings.getInstance().switchScene("MainWindowAnnouncments.fxml");
 
     }
 
@@ -74,47 +81,47 @@ public class EkranGlownyController implements Initializable {
         new GearOptions(event, gear);
     }
 
-    private List<Kontakt> filtrowaneUlubione(List<Kontakt>  kontakty){
-        List<Kontakt> filteredContacts = new ArrayList<>();
+    private List<Contact> filtrowaneUlubione(List<Contact>  kontakty){
+        List<Contact> filteredContacts = new ArrayList<>();
 
-        for(Kontakt contact : kontakty) {
+        for(Contact contact : kontakty) {
             boolean match = true;
 
             if(!generalTextField.getText().isEmpty()) {
                 String generalLowerCase = generalTextField.getText().toLowerCase();
-                if(!contact.getImie().toLowerCase().contains(generalLowerCase) &&
-                        !contact.getNazwisko().toLowerCase().contains(generalLowerCase) &&
-                        !contact.getNrTelefonu().toLowerCase().contains(generalLowerCase) &&
+                if(!contact.getName().toLowerCase().contains(generalLowerCase) &&
+                        !contact.getSurname().toLowerCase().contains(generalLowerCase) &&
+                        !contact.getPhoneNumber().toLowerCase().contains(generalLowerCase) &&
                         !contact.getEmail().toLowerCase().contains(generalLowerCase) &&
-                        !contact.getMiejscowosc().toLowerCase().contains(generalLowerCase) &&
-                        !contact.getUlica().toLowerCase().contains(generalLowerCase) &&
-                        !contact.getNrDomu().toLowerCase().contains(generalLowerCase) &&
-                        !contact.getOpis().toLowerCase().contains(generalLowerCase)) {
+                        !contact.getTown().toLowerCase().contains(generalLowerCase) &&
+                        !contact.getStreet().toLowerCase().contains(generalLowerCase) &&
+                        !contact.getHouseNumber().toLowerCase().contains(generalLowerCase) &&
+                        !contact.getDescription().toLowerCase().contains(generalLowerCase)) {
                     match = false;
                 }
             }
-            if(!nameTextField.getText().isEmpty() && !contact.getImie().toLowerCase().contains(nameTextField.getText().toLowerCase())) {
+            if(!nameTextField.getText().isEmpty() && !contact.getName().toLowerCase().contains(nameTextField.getText().toLowerCase())) {
                 match = false;
             }
-            if(!surnameTextField.getText().isEmpty() && !contact.getNazwisko().toLowerCase().contains(surnameTextField.getText().toLowerCase())) {
+            if(!surnameTextField.getText().isEmpty() && !contact.getSurname().toLowerCase().contains(surnameTextField.getText().toLowerCase())) {
                 match = false;
             }
             if(!emailTextField.getText().isEmpty() && !contact.getEmail().toLowerCase().contains(emailTextField.getText().toLowerCase())) {
                 match = false;
             }
-            if(!townTextField.getText().isEmpty() && !contact.getMiejscowosc().toLowerCase().contains(townTextField.getText().toLowerCase())) {
+            if(!townTextField.getText().isEmpty() && !contact.getTown().toLowerCase().contains(townTextField.getText().toLowerCase())) {
                 match = false;
             }
-            if(!phoneNumberTextField.getText().isEmpty() && !contact.getNrTelefonu().toLowerCase().contains(phoneNumberTextField.getText().toLowerCase())) {
+            if(!phoneNumberTextField.getText().isEmpty() && !contact.getPhoneNumber().toLowerCase().contains(phoneNumberTextField.getText().toLowerCase())) {
                 match = false;
             }
-            if(!streetTextField.getText().isEmpty() && !contact.getUlica().toLowerCase().contains(streetTextField.getText().toLowerCase())) {
+            if(!streetTextField.getText().isEmpty() && !contact.getStreet().toLowerCase().contains(streetTextField.getText().toLowerCase())) {
                 match = false;
             }
-            if(!homeNumberTextField.getText().isEmpty() && !contact.getNrDomu().toLowerCase().contains(homeNumberTextField.getText().toLowerCase())) {
+            if(!homeNumberTextField.getText().isEmpty() && !contact.getHouseNumber().toLowerCase().contains(homeNumberTextField.getText().toLowerCase())) {
                 match = false;
             }
-            if(!descriptionTextField.getText().isEmpty() && !contact.getOpis().toLowerCase().contains(descriptionTextField.getText().toLowerCase())) {
+            if(!descriptionTextField.getText().isEmpty() && !contact.getDescription().toLowerCase().contains(descriptionTextField.getText().toLowerCase())) {
                 match = false;
             }
             if(match) {
@@ -129,33 +136,40 @@ public class EkranGlownyController implements Initializable {
 
     public void ulubioneButtonAction(MouseEvent event){
         Settings.getInstance().setPageNumber(1);
-        if(Settings.getInstance().isFavourite())
+        if(Settings.getInstance().isFavourite()){
             Settings.getInstance().setFavourite(false);
-        else
+            favouriteHBox.getStyleClass().clear();
+            favouriteHBox.getStyleClass().add("dodaj-contact-button");
+        }
+        else{
             Settings.getInstance().setFavourite(true);
+            favouriteHBox.getStyleClass().clear();
+            favouriteHBox.getStyleClass().add("dodaj-contact-button2");
+        }
+
         showList();
     }
 
     private void loadContacts(){
         DBMenager dbMenager = new DBMenager();
         //List<Kontakt> kontakty = dbMenager.selectContacts(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage());
-        List<Kontakt> kontakty = dbMenager.selectContactsFiltered(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage(),
+        List<Contact> kontakty = dbMenager.selectContactsFiltered(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage(),
                 generalTextField.getText(), nameTextField.getText(), surnameTextField.getText(), emailTextField.getText(), townTextField.getText(),
                 phoneNumberTextField.getText(), streetTextField.getText(), homeNumberTextField.getText(), descriptionTextField.getText());
         for(int i = 0; i < kontakty.size(); i++){
-            Kontakt kontakt = kontakty.get(i);
-            KontaktGridPane kontaktGridPane = new KontaktGridPane(kontakt);
-            content.getChildren().add(kontaktGridPane);
+            Contact contact = kontakty.get(i);
+            ContaktGridPane contaktGridPane = new ContaktGridPane(contact);
+            content.getChildren().add(contaktGridPane);
         }
     }
     private void loadFavouriteContacts(){
         DBMenager dbMenager = new DBMenager();
-        List<Kontakt> contacts = dbMenager.selectFavoriteContacts();
-        List<Kontakt> kontakty = filtrowaneUlubione(contacts);
+        List<Contact> contacts = dbMenager.selectFavoriteContacts();
+        List<Contact> kontakty = filtrowaneUlubione(contacts);
         for(int i = 0; i < kontakty.size(); i++){
-            Kontakt kontakt = kontakty.get(i);
-            KontaktGridPane kontaktGridPane = new KontaktGridPane(kontakt);
-            content.getChildren().add(kontaktGridPane);
+            Contact contact = kontakty.get(i);
+            ContaktGridPane contaktGridPane = new ContaktGridPane(contact);
+            content.getChildren().add(contaktGridPane);
         }
     }
 
@@ -182,20 +196,23 @@ public class EkranGlownyController implements Initializable {
         setEventsToPageSelector(ps);
         setEventsToPageSelector(ps2);
 
-        KontaktGridPane header = new KontaktGridPane();
+        ContaktGridPane header = new ContaktGridPane();
         content.getChildren().clear();
         content.getChildren().add(ps);
         content.getChildren().add(header);
 
-        if(Settings.getInstance().isFavourite())
+        if(Settings.getInstance().isFavourite()){
+            favouriteHBox.getStyleClass().clear();
+            favouriteHBox.getStyleClass().add("dodaj-contact-button2");
             loadFavouriteContacts();
+        }
         else
             loadContacts();
 
         content.getChildren().add(ps2);
     }
 
-    // metoda, która ustawia nową wartość w MenuButtonie i wyświetla ją w konsoli
+
     private void setNewValue(String newValue) {
         Settings.getInstance().setContactsNumberOnPage(Integer.parseInt(newValue));
         numberOfPagesMenu.setText(newValue);

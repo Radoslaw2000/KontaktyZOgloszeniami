@@ -83,31 +83,31 @@ public class DBMenager
         }
     }
 
-    public void przywrocContact(Kontakt kontakt) {
+    public void restoreContact(Contact contact) {
     String sql = "INSERT INTO Kontakt (kontaktID, imie, nazwisko, nrtelefonu, email, miejscowosc, ulica, nrdomu, opis) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-        pstmt.setInt(1, kontakt.getId());
-        pstmt.setString(2, kontakt.getImie());
-        pstmt.setString(3, kontakt.getNazwisko());
-        pstmt.setString(4, kontakt.getNrTelefonu());
-        pstmt.setString(5, kontakt.getEmail());
-        pstmt.setString(6, kontakt.getMiejscowosc());
-        pstmt.setString(7, kontakt.getUlica());
-        pstmt.setString(8, kontakt.getNrDomu());
-        pstmt.setString(9, kontakt.getOpis());
+        pstmt.setInt(1, contact.getId());
+        pstmt.setString(2, contact.getName());
+        pstmt.setString(3, contact.getSurname());
+        pstmt.setString(4, contact.getPhoneNumber());
+        pstmt.setString(5, contact.getEmail());
+        pstmt.setString(6, contact.getTown());
+        pstmt.setString(7, contact.getStreet());
+        pstmt.setString(8, contact.getHouseNumber());
+        pstmt.setString(9, contact.getDescription());
         pstmt.executeUpdate(); // wykonaj zapytanie
     } catch (SQLException e) {
         System.out.println(e.getMessage());
     }
 }
 
-    public void insertUlubione(User user, Kontakt kontakt) {
+    public void insertFavourite(User user, Contact contact) {
         String sql = "INSERT INTO UlubionyKontakt (uzytkownikID, kontaktID) VALUES (?, ?)";
         int userID = selectUserIdByLogin(user.getLogin());
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, String.valueOf(userID));
-            pstmt.setString(2, String.valueOf(kontakt.getId()));
+            pstmt.setString(2, String.valueOf(contact.getId()));
             pstmt.executeUpdate(); // wykonaj zapytanie
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -129,23 +129,23 @@ public class DBMenager
         return -1; // gdy nie znaleziono użytkownika
     }
 
-    public List<Kontakt> selectContacts() {
-        List<Kontakt> kontakty = new ArrayList<>();
+    public List<Contact> selectContacts() {
+        List<Contact> kontakty = new ArrayList<>();
         String sql = "SELECT * FROM Kontakt";
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Kontakt kontakt = new Kontakt();
-                kontakt.setId(rs.getInt("kontaktID"));
-                kontakt.setImie(rs.getString("imie"));
-                kontakt.setNazwisko(rs.getString("nazwisko"));
-                kontakt.setNrTelefonu(rs.getString("nrtelefonu"));
-                kontakt.setEmail(rs.getString("email"));
-                kontakt.setMiejscowosc(rs.getString("miejscowosc"));
-                kontakt.setUlica(rs.getString("ulica"));
-                kontakt.setNrDomu(rs.getString("nrdomu"));
-                kontakt.setOpis(rs.getString("opis"));
-                kontakty.add(kontakt);
+                Contact contact = new Contact();
+                contact.setId(rs.getInt("kontaktID"));
+                contact.setName(rs.getString("imie"));
+                contact.setSurname(rs.getString("nazwisko"));
+                contact.setPhoneNumber(rs.getString("nrtelefonu"));
+                contact.setEmail(rs.getString("email"));
+                contact.setTown(rs.getString("miejscowosc"));
+                contact.setStreet(rs.getString("ulica"));
+                contact.setHouseNumber(rs.getString("nrdomu"));
+                contact.setDescription(rs.getString("opis"));
+                kontakty.add(contact);
             }
             return kontakty;
         } catch (SQLException e) {
@@ -154,25 +154,25 @@ public class DBMenager
         return null;
     }
 
-    public List<Kontakt> selectContacts(int pageNumber, int contactsNumberOnPage) {
-        List<Kontakt> kontakty = new ArrayList<>();
+    public List<Contact> selectContacts(int pageNumber, int contactsNumberOnPage) {
+        List<Contact> kontakty = new ArrayList<>();
         int startIndex = (pageNumber - 1) * contactsNumberOnPage;
         String sql = "SELECT * FROM Kontakt ORDER BY nazwisko LIMIT " + startIndex + ", " + contactsNumberOnPage;
         //System.out.println(sql);
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Kontakt kontakt = new Kontakt();
-                kontakt.setId(rs.getInt("kontaktID"));
-                kontakt.setImie(rs.getString("imie"));
-                kontakt.setNazwisko(rs.getString("nazwisko"));
-                kontakt.setNrTelefonu(rs.getString("nrtelefonu"));
-                kontakt.setEmail(rs.getString("email"));
-                kontakt.setMiejscowosc(rs.getString("miejscowosc"));
-                kontakt.setUlica(rs.getString("ulica"));
-                kontakt.setNrDomu(rs.getString("nrdomu"));
-                kontakt.setOpis(rs.getString("opis"));
-                kontakty.add(kontakt);
+                Contact contact = new Contact();
+                contact.setId(rs.getInt("kontaktID"));
+                contact.setName(rs.getString("imie"));
+                contact.setSurname(rs.getString("nazwisko"));
+                contact.setPhoneNumber(rs.getString("nrtelefonu"));
+                contact.setEmail(rs.getString("email"));
+                contact.setTown(rs.getString("miejscowosc"));
+                contact.setStreet(rs.getString("ulica"));
+                contact.setHouseNumber(rs.getString("nrdomu"));
+                contact.setDescription(rs.getString("opis"));
+                kontakty.add(contact);
             }
             return kontakty;
         } catch (SQLException e) {
@@ -181,12 +181,12 @@ public class DBMenager
         return null;
     }
 
-    public List<Kontakt> selectContactsFiltered(int pageNumber, int contactsNumberOnPage,
+    public List<Contact> selectContactsFiltered(int pageNumber, int contactsNumberOnPage,
                                                 String generalText, String nameText, String surnameText, String emailText,
                                                 String townText, String phoneNumberText, String streetText, String homeNumberText,
                                                 String descriptionText) {
 
-        List<Kontakt> kontakty = new ArrayList<>();
+        List<Contact> kontakty = new ArrayList<>();
         int startIndex = (pageNumber - 1) * contactsNumberOnPage;
         StringBuilder sqlBuilder = new StringBuilder();
         sqlBuilder.append("SELECT * FROM Kontakt WHERE ");
@@ -269,17 +269,17 @@ public class DBMenager
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Kontakt kontakt = new Kontakt();
-                kontakt.setId(rs.getInt("kontaktID"));
-                kontakt.setImie(rs.getString("imie"));
-                kontakt.setNazwisko(rs.getString("nazwisko"));
-                kontakt.setNrTelefonu(rs.getString("nrtelefonu"));
-                kontakt.setEmail(rs.getString("email"));
-                kontakt.setMiejscowosc(rs.getString("miejscowosc"));
-                kontakt.setUlica(rs.getString("ulica"));
-                kontakt.setNrDomu(rs.getString("nrdomu"));
-                kontakt.setOpis(rs.getString("opis"));
-                kontakty.add(kontakt);
+                Contact contact = new Contact();
+                contact.setId(rs.getInt("kontaktID"));
+                contact.setName(rs.getString("imie"));
+                contact.setSurname(rs.getString("nazwisko"));
+                contact.setPhoneNumber(rs.getString("nrtelefonu"));
+                contact.setEmail(rs.getString("email"));
+                contact.setTown(rs.getString("miejscowosc"));
+                contact.setStreet(rs.getString("ulica"));
+                contact.setHouseNumber(rs.getString("nrdomu"));
+                contact.setDescription(rs.getString("opis"));
+                kontakty.add(contact);
             }
             return kontakty;
         } catch (SQLException e) {
@@ -337,13 +337,13 @@ public class DBMenager
         }
     }
 
-    public List<Kontakt> selectFavoriteContacts() {
+    public List<Contact> selectFavoriteContacts() {
         String login = Settings.getInstance().getUser().getLogin();
         int pageNumber = Settings.getInstance().getPageNumber();
         int contactsNumberOnPage = Settings.getInstance().getContactsNumberOnPage();
         int userID = selectUserIdByLogin(login);
 
-        List<Kontakt> favoriteContacts = new ArrayList<>();
+        List<Contact> favoriteContacts = new ArrayList<>();
         int startIndex = (pageNumber - 1) * contactsNumberOnPage;
         String sql = "SELECT k.* FROM Kontakt k JOIN UlubionyKontakt uk ON k.kontaktID = uk.kontaktID WHERE uk.uzytkownikID = ? LIMIT ?,?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -352,17 +352,17 @@ public class DBMenager
             pstmt.setInt(3, contactsNumberOnPage);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                Kontakt kontakt = new Kontakt();
-                kontakt.setId(rs.getInt("kontaktID"));
-                kontakt.setImie(rs.getString("imie"));
-                kontakt.setNazwisko(rs.getString("nazwisko"));
-                kontakt.setNrTelefonu(rs.getString("nrtelefonu"));
-                kontakt.setEmail(rs.getString("email"));
-                kontakt.setMiejscowosc(rs.getString("miejscowosc"));
-                kontakt.setUlica(rs.getString("ulica"));
-                kontakt.setNrDomu(rs.getString("nrdomu"));
-                kontakt.setOpis(rs.getString("opis"));
-                favoriteContacts.add(kontakt);
+                Contact contact = new Contact();
+                contact.setId(rs.getInt("kontaktID"));
+                contact.setName(rs.getString("imie"));
+                contact.setSurname(rs.getString("nazwisko"));
+                contact.setPhoneNumber(rs.getString("nrtelefonu"));
+                contact.setEmail(rs.getString("email"));
+                contact.setTown(rs.getString("miejscowosc"));
+                contact.setStreet(rs.getString("ulica"));
+                contact.setHouseNumber(rs.getString("nrdomu"));
+                contact.setDescription(rs.getString("opis"));
+                favoriteContacts.add(contact);
             }
             return favoriteContacts;
         } catch (SQLException e) {

@@ -123,21 +123,33 @@
 
 
 
+.dodaj-contact-button2 {
+  -fx-background-color: #ccc;
+  -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-background-radius: 0;
+}
+.dodaj-contact-button2:hover {
+  -fx-background-color: #eee;
+  -fx-text-fill: #333;
+  -fx-font-weight: normal;
+  -fx-cursor: hand;
+}
 
-
-.dodaj-kontakt-button {
+.dodaj-contact-button {
   -fx-background-color: #eee;
   -fx-text-fill: #333;
   -fx-font-size: 16px;
   -fx-background-radius: 0;
 }
-.dodaj-kontakt-button:hover {
+.dodaj-contact-button:hover {
   -fx-background-color: #ccc;
   -fx-text-fill: white;
   -fx-font-weight: bold;
   -fx-cursor: hand;
 }
-.dodaj-kontakt-button:pressed  {
+.dodaj-contact-button:pressed  {
   -fx-background-color: linear-gradient(to top, #ccc, #aaa);
 }
 

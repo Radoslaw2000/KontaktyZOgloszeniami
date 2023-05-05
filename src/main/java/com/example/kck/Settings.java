@@ -6,14 +6,17 @@ public class Settings {
 
     private static Settings instance;
     private Stage stage;
+
+    private SceneSwitcher sceneSwitcher;
     private User user;
     private int pageNumber;
     private int contactsNumberOnPage;
-    private boolean favourite;
+    private boolean isFavourite;
 
     private Settings() {
         pageNumber = 1;
         contactsNumberOnPage = 20;
+        sceneSwitcher = new SceneSwitcher();
     }
 
     public static Settings getInstance() {
@@ -23,6 +26,9 @@ public class Settings {
         return instance;
     }
 
+    public void switchScene(String fxmlName){
+        sceneSwitcher.switchScene(fxmlName);
+    }
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -56,10 +62,10 @@ public class Settings {
     }
 
     public boolean isFavourite() {
-        return favourite;
+        return isFavourite;
     }
 
-    public void setFavourite(boolean favourite) {
-        this.favourite = favourite;
+    public void setFavourite(boolean isFavourite) {
+        this.isFavourite = isFavourite;
     }
 }

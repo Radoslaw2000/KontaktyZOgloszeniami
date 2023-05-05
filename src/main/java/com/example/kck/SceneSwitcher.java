@@ -1,17 +1,8 @@
 package com.example.kck;
 
-import com.example.kck.controllers.EdytujKontaktController;
-import com.example.kck.controllers.WyswietlKontaktController;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;

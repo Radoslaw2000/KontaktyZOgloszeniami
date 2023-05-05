@@ -22,8 +22,7 @@ public class GearOptions {
 
     private void logout() {
         Settings.getInstance().setPageNumber(1);
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("StartWindow.fxml");
+        Settings.getInstance().switchScene("StartWindow.fxml");
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.kck.controllers;
 
 import com.example.kck.SceneSwitcher;
+import com.example.kck.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -14,13 +15,11 @@ import java.io.IOException;
 
 public class StartWindowController {
     public void loginButtonAction(ActionEvent event) throws IOException {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("LoginWindow.fxml");
+        Settings.getInstance().switchScene("LoginWindow.fxml");
     }
 
     public void registerButtonAction(ActionEvent event) throws IOException {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("RegisterWindow.fxml");
+        Settings.getInstance().switchScene("RegisterWindow.fxml");
     }
 
     public void exitButtonAction(ActionEvent event) throws IOException {

@@ -6,8 +6,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,18 +13,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class WyswietlKontaktController{
+public class ShowContactDetailsController {
 
     @FXML
     Button editButton, deleteButton, likeButton;
@@ -43,20 +37,24 @@ public class WyswietlKontaktController{
     @FXML
     TextArea descriptionTextArea;
 
-    private Kontakt kontakt;
+    private Contact contact;
 
     private boolean isDeleted;
 
+
+    public void homeButtonAction(MouseEvent event){
+        Settings.getInstance().setPageNumber(1);
+        Settings.getInstance().switchScene("MainWindowContacts.fxml");
+    }
+
     public void dodajKontaktButtonAction(MouseEvent event) {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("DodajKontaktWindow.fxml");
+        Settings.getInstance().switchScene("AddContactWindow.fxml");
     }
 
     public void ulubioneButtonAction(MouseEvent event){
         Settings.getInstance().setPageNumber(1);
         Settings.getInstance().setFavourite(true);
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("MainWindow.fxml");
+        Settings.getInstance().switchScene("MainWindowContacts.fxml");
     }
 
     public void editButtonAction(ActionEvent event) throws IOException {
@@ -66,7 +64,7 @@ public class WyswietlKontaktController{
         double sceneHeight = ((Node) event.getSource()).getScene().getHeight();
 
         Platform.runLater(() -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/kck/EdytujKontaktWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/kck/EditContactWindow.fxml"));
             Parent root = null;
             try {
                 root = loader.load();
@@ -76,8 +74,8 @@ public class WyswietlKontaktController{
             Scene scene = new Scene(root, sceneWidth, sceneHeight);
             stage.setScene(scene);
 
-            EdytujKontaktController controller = loader.getController();
-            controller.initialize(kontakt);
+            EditContactController controller = loader.getController();
+            controller.initialize(contact);
             stage.show();
         });
     }
@@ -89,17 +87,23 @@ public class WyswietlKontaktController{
         pause.setOnFinished(event1 -> tytul.setVisible(false));
 
         if(!isDeleted){
-            dbMenager.deleteContact(kontakt.getId());
+            dbMenager.deleteContact(contact.getId());
             tytul.setText("Usunięto kontakt");
             tytul.setVisible(true);
             isDeleted = true;
+            deleteButton.getStyleClass().clear();
+            deleteButton.getStyleClass().add("edit-button");
+            deleteButton.setText("Przywróć");
             ////aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         }
         else{
-            dbMenager.przywrocContact(kontakt);
+            dbMenager.restoreContact(contact);
             tytul.setText("Przywrócono kontakt");
             tytul.setVisible(true);
             isDeleted = false;
+            deleteButton.getStyleClass().clear();
+            deleteButton.getStyleClass().add("delete-button");
+            deleteButton.setText("Usuń");
         }
         pause.play();
 
@@ -111,14 +115,14 @@ public class WyswietlKontaktController{
         PauseTransition pause = new PauseTransition(Duration.millis(1500));
         pause.setOnFinished(event1 -> tytul.setVisible(false));
 
-        if(dbMenager.isFavoriteContact(Settings.getInstance().getUser(), kontakt.getId())){
-            dbMenager.deleteFavouriteContact(kontakt.getId());
+        if(dbMenager.isFavoriteContact(Settings.getInstance().getUser(), contact.getId())){
+            dbMenager.deleteFavouriteContact(contact.getId());
             tytul.setFill(Color.rgb(234, 27, 48));
             tytul.setText("Usunięto z ulubionych");
             tytul.setVisible(true);
         }
         else{
-            dbMenager.insertUlubione(Settings.getInstance().getUser(), kontakt);
+            dbMenager.insertFavourite(Settings.getInstance().getUser(), contact);
             tytul.setFill(Color.rgb(51, 204, 51));
             tytul.setText("Dodano do ulubionych");
             tytul.setVisible(true);
@@ -131,24 +135,23 @@ public class WyswietlKontaktController{
         new GearOptions(event, gear);
     }
     public void powrotButtonAction(ActionEvent event) {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("MainWindow.fxml");
+        Settings.getInstance().switchScene("MainWindowContacts.fxml");
     }
 
-    public void initialize(Kontakt kontakt) {
+    public void initialize(Contact contact) {
         isDeleted = false;
-        this.kontakt = kontakt;
+        this.contact = contact;
         userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);
         login.setText(Settings.getInstance().getUser().getLogin());
 
-        nameText.setText(kontakt.getImie());
-        surnameText.setText(kontakt.getNazwisko());
-        emailText.setText(kontakt.getEmail());
-        townText.setText(kontakt.getMiejscowosc());
-        phoneNumberText.setText(kontakt.getNrTelefonu());
-        streetText.setText(kontakt.getUlica());
-        homeNumberText.setText(kontakt.getNrDomu());
-        descriptionTextArea.setText(kontakt.getOpis());
+        nameText.setText(contact.getName());
+        surnameText.setText(contact.getSurname());
+        emailText.setText(contact.getEmail());
+        townText.setText(contact.getTown());
+        phoneNumberText.setText(contact.getPhoneNumber());
+        streetText.setText(contact.getStreet());
+        homeNumberText.setText(contact.getHouseNumber());
+        descriptionTextArea.setText(contact.getDescription());
 
         if(Settings.getInstance().getUser().isAdmin()){
             editButton.setVisible(true);

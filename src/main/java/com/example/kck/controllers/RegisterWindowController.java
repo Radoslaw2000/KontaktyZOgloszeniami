@@ -72,14 +72,12 @@ public class RegisterWindowController {
         pause.setOnFinished(event1 -> {
             message.setVisible(false);
             Settings.getInstance().setUser(new User(login));
-            SceneSwitcher ss = new SceneSwitcher();
-            ss.switchScene("MainWindow.fxml");
+            Settings.getInstance().switchScene("MainWindowContacts.fxml");
         });
         pause.play();
     }
 
     public void returnButtonAction(ActionEvent event) throws IOException {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.switchScene("StartWindow.fxml");
+        Settings.getInstance().switchScene("StartWindow.fxml");
     }
 }
