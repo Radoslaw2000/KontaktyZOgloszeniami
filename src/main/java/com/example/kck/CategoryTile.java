@@ -1,22 +1,14 @@
 package com.example.kck;
 
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class CategoryTile extends VBox {
     private ImageView imageView;
@@ -53,10 +45,12 @@ public class CategoryTile extends VBox {
             @Override
             public void handle(MouseEvent event) {
 
-            OgloszenieGridPane ogloszenieGridPane;
+                Settings.getInstance().setCategory(categoryText);
+                content.getChildren().clear();
+
             for(int i = 0; i<10; i++) {
-                ogloszenieGridPane = new OgloszenieGridPane();
-                content.getChildren().add(ogloszenieGridPane);
+                AnnouncmentGridPane announcmentGridPane = new AnnouncmentGridPane("Tytuł", "Cena", "Kielce");
+                content.getChildren().add(announcmentGridPane);
             }
 
             }

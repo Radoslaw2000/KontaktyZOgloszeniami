@@ -13,6 +13,8 @@ public class Settings {
     private int contactsNumberOnPage;
     private boolean isFavourite;
 
+    private String category;
+
     private Settings() {
         pageNumber = 1;
         contactsNumberOnPage = 20;
@@ -67,5 +69,13 @@ public class Settings {
 
     public void setFavourite(boolean isFavourite) {
         this.isFavourite = isFavourite;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

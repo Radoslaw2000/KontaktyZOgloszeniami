@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+//do usunięcia
 public class AnnouncmentFilter extends VBox {
 
     private TextField fromPriceField;

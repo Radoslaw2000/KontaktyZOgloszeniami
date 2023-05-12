@@ -122,7 +122,7 @@ public class ShowContactDetailsController {
             tytul.setVisible(true);
         }
         else{
-            dbMenager.insertFavourite(Settings.getInstance().getUser(), contact);
+            dbMenager.insertFavouriteContact(Settings.getInstance().getUser(), contact);
             tytul.setFill(Color.rgb(51, 204, 51));
             tytul.setText("Dodano do ulubionych");
             tytul.setVisible(true);

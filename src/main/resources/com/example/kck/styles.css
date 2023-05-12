@@ -171,6 +171,16 @@
     -fx-font-weight: bold;
 }
 
+.ogloszenie {
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: black;
+}
+.ogloszenie:hover {
+   -fx-background-color: #ccc;
+   -fx-cursor: hand;
+}
+
 .settings-button:hover {
     -fx-cursor: hand;
 }
@@ -221,6 +231,11 @@
     text-area-background: transparent ;
 }
 .text-area .content {
+    -fx-background-color: text-area-background ;
+    -fx-border-style: none;
+}
+
+.text-area-announcment {
     -fx-background-color: text-area-background ;
     -fx-border-style: none;
 }
