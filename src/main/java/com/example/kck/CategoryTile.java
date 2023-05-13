@@ -6,9 +6,12 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
+import java.util.List;
+
+import static java.util.Objects.isNull;
 
 public class CategoryTile extends VBox {
     private ImageView imageView;
@@ -46,15 +49,55 @@ public class CategoryTile extends VBox {
             public void handle(MouseEvent event) {
 
                 Settings.getInstance().setCategory(categoryText);
-                content.getChildren().clear();
-
-            for(int i = 0; i<10; i++) {
-                AnnouncmentGridPane announcmentGridPane = new AnnouncmentGridPane("Tytuł", "Cena", "Kielce");
-                content.getChildren().add(announcmentGridPane);
-            }
-
+                //content.getChildren().clear();
+                showList(content);
             }
         });
+    }
+
+    private void setEventsToPageSelector(PageSelector ps, VBox content){
+        ps.getIncrese().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                ps.increse();
+                showList(content);
+            }
+        });
+        ps.getDecrese().setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                ps.decrese();
+                showList(content);
+            }
+        });
+    }
+
+    private void loadContacts(VBox content){
+        DBMenager dbMenager = new DBMenager();
+        List<Announcment> announcments = dbMenager.selectAnnouncmentFiltered(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage(), "", "", "", "", "", "","");
+
+        for (Announcment announcment : announcments) {
+            content.getChildren().add(new AnnouncmentGridPane(announcment));
+        }
+    }
+    private void showList(VBox content){
+        PageSelector ps = new PageSelector();
+        PageSelector ps2 = new PageSelector();
+        setEventsToPageSelector(ps, content);
+        setEventsToPageSelector(ps2, content);
+
+        content.getChildren().clear();
+        content.getChildren().add(ps);
+/*
+        if(Settings.getInstance().isFavourite()){
+            favouriteHBox.getStyleClass().clear();
+            favouriteHBox.getStyleClass().add("dodaj-contact-button2");
+            //loadFavouriteContacts();
+        }
+        else */
+        loadContacts(content);
+
+        content.getChildren().add(ps2);
     }
 
     public ImageView getImageView() {

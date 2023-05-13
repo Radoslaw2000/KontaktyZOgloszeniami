@@ -3,6 +3,7 @@ package com.example.kck;
     import java.sql.*;
     import java.util.ArrayList;
     import java.util.List;
+    import java.util.Objects;
 
 public class DBMenager
 {
@@ -305,7 +306,102 @@ public class DBMenager
     }
 
 
-        public void updateContact(int contactID, String name, String surname, String phoneNumber, String email, String town, String street, String homeNumber, String description) {
+    public List<Announcment> selectAnnouncmentFiltered(int pageNumber, int contactsNumberOnPage, String generalText, String title,
+                                              String description, String priceFrom, String priceTo, String town, String voivodeship) {
+        List<Announcment> announcments = new ArrayList<>();
+        int indeksStartowy = (pageNumber - 1) * contactsNumberOnPage;
+
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT * FROM Ogloszenie WHERE ");
+        boolean whereClauseAdded = false;
+
+        if (!generalText.isEmpty()) {
+            sqlBuilder.append("(tytul LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("opis LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("miejscowosc LIKE '%").append(generalText).append("%')");
+            whereClauseAdded = true;
+        }
+        if (!title.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("tytul LIKE '%").append(title).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!description.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("opis LIKE '%").append(description).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!priceFrom.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("cena >= ").append(priceFrom);
+            whereClauseAdded = true;
+        }
+        if (!priceTo.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("cena <= ").append(priceTo);
+            whereClauseAdded = true;
+        }
+        if (!town.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("miejscowosc LIKE '%").append(town).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!voivodeship.isEmpty()) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("wojewodztwo LIKE '%").append(voivodeship).append("%'");
+            whereClauseAdded = true;
+        }
+        if (!Settings.getInstance().getCategory().equals("Wszystko")) {
+            if (whereClauseAdded) {
+                sqlBuilder.append(" AND ");
+            }
+            sqlBuilder.append("kategoria LIKE '%").append(Settings.getInstance().getCategory()).append("%'");
+            whereClauseAdded = true;
+        }
+
+        if(!whereClauseAdded)
+            sqlBuilder.append(" 1 ");
+        sqlBuilder.append(" ORDER BY ogloszenieID LIMIT ").append(indeksStartowy).append(", ").append(contactsNumberOnPage);
+
+        String sql = sqlBuilder.toString();
+        System.out.println(sql); ///////////////
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Announcment announcment = new Announcment();
+                announcment.setId(rs.getInt("ogloszenieID"));
+                announcment.setTitle(rs.getString("tytul"));
+                announcment.setPrice(rs.getString("cena"));
+                announcment.setDescription(rs.getString("opis"));
+                announcment.setTown(rs.getString("miejscowosc"));
+                announcment.setCategory(rs.getString("kategoria"));
+                announcment.setPhonenumber(rs.getString("nrtelefonu"));
+                announcment.setVoivodeship(rs.getString("wojewodztwo"));
+                announcments.add(announcment);
+            }
+            return announcments;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+
+
+    public void updateContact(int contactID, String name, String surname, String phoneNumber, String email, String town, String street, String homeNumber, String description) {
         String sql = "UPDATE Kontakt SET imie = ?, nazwisko = ?, nrtelefonu = ?, email = ?, miejscowosc = ?, ulica = ?, nrdomu = ?, opis = ? WHERE kontaktID = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);

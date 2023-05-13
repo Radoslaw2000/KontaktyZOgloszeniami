@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 
 public class AnnouncmentGridPane extends GridPane {
 
-    public AnnouncmentGridPane(String title, String price, String location) {
+    public AnnouncmentGridPane(Announcment announcment) {
         // ustawienia siatki
         setPrefHeight(60);
         getStyleClass().add("ogloszenie");
@@ -38,11 +38,11 @@ public class AnnouncmentGridPane extends GridPane {
         getRowConstraints().addAll(row1, row2);
 
         // dodanie dzieci
-        Text titleText = new Text(title);
+        Text titleText = new Text(announcment.getTitle());
         titleText.setFont(new Font(18));
-        Text priceText = new Text(price);
+        Text priceText = new Text(announcment.getPrice() + " zł");
         priceText.setFont(new Font(18));
-        Text locationText = new Text(location);
+        Text locationText = new Text(announcment.getTown());
         add(titleText, 0, 0);
         add(priceText, 1, 0);
         add(locationText, 0, 1);

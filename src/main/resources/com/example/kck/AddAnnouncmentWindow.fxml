@@ -181,12 +181,12 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Text>
-                        <TextField fx:id="priceTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="priceTextField" maxWidth="300.0" minWidth="80.0" promptText="w pln np. 40" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <GridPane.margin>
                               <Insets left="5.0" right="10.0" />
                            </GridPane.margin>
                         </TextField>
-                        <TextField fx:id="townTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <TextField fx:id="townTextField" maxWidth="300.0" minWidth="80.0" promptText="np. Kielce" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets left="5.0" right="10.0" />
                            </GridPane.margin>
@@ -207,7 +207,7 @@
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </Text>
-                        <TextField fx:id="phoneNumberTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <TextField fx:id="phoneNumberTextField" maxWidth="300.0" minWidth="80.0" promptText="numer telefonu np. 123123123" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="5.0" right="10.0" />
                            </GridPane.margin>
@@ -238,7 +238,7 @@
                               <Insets left="5.0" right="10.0" />
                            </GridPane.margin>
                         </ComboBox>
-                        <TextField fx:id="titleTextField" maxWidth="300.0" minWidth="80.0" styleClass="text-field" GridPane.columnIndex="1">
+                        <TextField fx:id="titleTextField" maxWidth="300.0" minWidth="80.0" promptText="np. Korepetycje" styleClass="text-field" GridPane.columnIndex="1">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>

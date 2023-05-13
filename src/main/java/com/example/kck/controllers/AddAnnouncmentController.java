@@ -114,7 +114,7 @@ public class AddAnnouncmentController implements Initializable {
 
     private void addCategoriesToCombobox() {
         ObservableList<String> categories = categoryComboBox.getItems();
-        categories.addAll("Category 1", "Category 2", "Category 3", "Category 4");
+        categories.addAll("Wszystko", "Budownictwo", "Dom i ogród", "Transport", "Elektronika", "Edukacja", "Praca", "Biznes", "Rolnictwo", "Motoryzacja", "Turystyka", "Zdrowie", "Uroda", "Uroczystości", "Poznajmy się");
         categoryComboBox.setItems(categories);
 
         ObservableList<String> voievodeships = voivodeshipComboBox.getItems();

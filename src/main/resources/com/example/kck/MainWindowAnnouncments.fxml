@@ -36,7 +36,7 @@
           <RowConstraints maxHeight="40.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="61.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" styleClass="category-tile">
+            <ImageView fitHeight="61.0" fitWidth="150.0" onMouseClicked="#homeButtonAction" pickOnBounds="true" preserveRatio="true" styleClass="category-tile">
                <image>
                   <Image url="@logo.png" />
                </image>
@@ -150,7 +150,7 @@
                                          <Insets left="20.0" right="10.0" />
                                      </VBox.margin>
                                  </TextField>
-                              <ComboBox maxWidth="240.0" minWidth="170.0" prefHeight="30.0" promptText="Województwo">
+                              <ComboBox fx:id="voivodeshipComboBox" maxWidth="240.0" minWidth="170.0" prefHeight="30.0" promptText="Województwo">
                                  <VBox.margin>
                                     <Insets left="20.0" right="10.0" />
                                  </VBox.margin>
