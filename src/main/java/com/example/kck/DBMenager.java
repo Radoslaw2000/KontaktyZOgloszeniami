@@ -3,7 +3,6 @@ package com.example.kck;
     import java.sql.*;
     import java.util.ArrayList;
     import java.util.List;
-    import java.util.Objects;
 
 public class DBMenager
 {
@@ -110,7 +109,7 @@ public class DBMenager
             pstmt.setString(3, announcment.getDescription());
             pstmt.setString(4, announcment.getTown());
             pstmt.setString(5, announcment.getCategory());
-            pstmt.setString(6, announcment.getPhonenumber());
+            pstmt.setString(6, announcment.getPhoneNumber());
             pstmt.setString(7, announcment.getVoivodeship());
             pstmt.executeUpdate(); // wykonaj zapytanie
         } catch (SQLException e) {
@@ -356,7 +355,7 @@ public class DBMenager
             sqlBuilder.append("miejscowosc LIKE '%").append(town).append("%'");
             whereClauseAdded = true;
         }
-        if (!voivodeship.isEmpty()) {
+        if (!voivodeship.isEmpty() && !voivodeship.equals("cała polska")) {
             if (whereClauseAdded) {
                 sqlBuilder.append(" AND ");
             }
@@ -388,7 +387,7 @@ public class DBMenager
                 announcment.setDescription(rs.getString("opis"));
                 announcment.setTown(rs.getString("miejscowosc"));
                 announcment.setCategory(rs.getString("kategoria"));
-                announcment.setPhonenumber(rs.getString("nrtelefonu"));
+                announcment.setPhoneNumber(rs.getString("nrtelefonu"));
                 announcment.setVoivodeship(rs.getString("wojewodztwo"));
                 announcments.add(announcment);
             }

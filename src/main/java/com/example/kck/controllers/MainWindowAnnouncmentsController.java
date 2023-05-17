@@ -182,6 +182,8 @@ public class MainWindowAnnouncmentsController implements Initializable {
 
                 if(isNull(Settings.getInstance().getCategory()))
                     responsiveCategoryMenu(Settings.getInstance().getStage().getScene());
+                else
+                    showList();
 
                 userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);
                 login.setText(Settings.getInstance().getUser().getLogin());

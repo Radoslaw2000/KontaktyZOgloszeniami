@@ -8,20 +8,20 @@ public class Announcment {
     private String description;
     private String town;
     private String category;
-    private String phonenumber;
+    private String phoneNumber;
 
     private  String voivodeship;
 
     public Announcment(){}
 
-    public Announcment(int id, String price, String title, String description, String town, String category, String phonenumber, String voivodeship) {
+    public Announcment(int id, String price, String title, String description, String town, String category, String phoneNumber, String voivodeship) {
         this.id = id;
         this.price = price;
         this.title = title;
         this.description = description;
         this.town = town;
         this.category = category;
-        this.phonenumber = phonenumber;
+        this.phoneNumber = phoneNumber;
         this.voivodeship = voivodeship;
     }
 
@@ -73,12 +73,12 @@ public class Announcment {
         this.category = category;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getVoivodeship() {

@@ -1,11 +1,22 @@
 package com.example.kck;
 
+import com.example.kck.controllers.ShowAnnouncmentDetailsController;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class AnnouncmentGridPane extends GridPane {
 
@@ -52,5 +63,30 @@ public class AnnouncmentGridPane extends GridPane {
         GridPane.setMargin(priceText, new Insets(0, 0, 0, 5));
         GridPane.setMargin(locationText, new Insets(0, 0, 0, 5));
         GridPane.setMargin(this, new Insets(0, 25, 0, 5));
+
+        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                double sceneWidth = ((Node) event.getSource()).getScene().getWidth();
+                double sceneHeight = ((Node) event.getSource()).getScene().getHeight();
+
+                Platform.runLater(() -> {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowAnnouncmentDetailsWindow.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Scene scene = new Scene(root, sceneWidth, sceneHeight);
+                    stage.setScene(scene);
+
+                    ShowAnnouncmentDetailsController controller = loader.getController();
+                    controller.initialize(announcment);
+                    stage.show();
+                });
+            }
+        });
     }
 }
