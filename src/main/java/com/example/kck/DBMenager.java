@@ -99,7 +99,25 @@ public class DBMenager
     } catch (SQLException e) {
         System.out.println(e.getMessage());
     }
+
 }
+    public void restoreAnnouncment(Announcment announcment) {
+        String sql = "INSERT INTO Ogloszenie (ogloszenieID, tytul, cena, opis, miejscowosc, kategoria, nrtelefonu, wojewodztwo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, announcment.getId());
+            pstmt.setString(2, announcment.getTitle());
+            pstmt.setString(3, announcment.getPrice());
+            pstmt.setString(4, announcment.getDescription());
+            pstmt.setString(5, announcment.getTown());
+            pstmt.setString(6, announcment.getCategory());
+            pstmt.setString(7, announcment.getPhoneNumber());
+            pstmt.setString(8, announcment.getVoivodeship());
+            pstmt.executeUpdate(); // wykonaj zapytanie
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     public void insertAnnouncment(Announcment announcment) {
         String sql = "INSERT INTO Ogloszenie (tytul, cena, opis, miejscowosc, kategoria, nrtelefonu, wojewodztwo) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -124,6 +142,19 @@ public class DBMenager
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, String.valueOf(userID));
             pstmt.setString(2, String.valueOf(contact.getId()));
+            pstmt.executeUpdate(); // wykonaj zapytanie
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void insertFavouriteAnnouncment(User user, Announcment announcment) {
+        String sql = "INSERT INTO UlubioneOgloszenie (uzytkownikID, ogloszenieID) VALUES (?, ?)";
+        int userID = selectUserIdByLogin(user.getLogin());
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, String.valueOf(userID));
+            pstmt.setString(2, String.valueOf(announcment.getId()));
             pstmt.executeUpdate(); // wykonaj zapytanie
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -435,18 +466,22 @@ public class DBMenager
         return false;
     }
 
-
-    public void deleteFavoriteContact(User user, int kontaktID) {
-        String sql = "DELETE FROM UlubionyKontakt WHERE uzytkownikID = ? AND kontaktID = ?";
+    public boolean isFavoriteAnnouncment(User user, int announcmentID) {
+        String sql = "SELECT * FROM UlubioneOgloszenie WHERE uzytkownikID = ? AND ogloszenieID = ?";
         int userID = selectUserIdByLogin(user.getLogin());
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, userID);
-            pstmt.setInt(2, kontaktID);
-            pstmt.executeUpdate();
+            pstmt.setInt(2, announcmentID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return false;
     }
+
 
     public List<Contact> selectFavoriteContacts() {
         String login = Settings.getInstance().getUser().getLogin();
@@ -493,6 +528,18 @@ public class DBMenager
         }
     }
 
+    public void deleteAnnouncment(int announcmentID) {
+        String sql = "DELETE FROM Ogloszenie WHERE ogloszenieID = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, announcmentID);
+            pstmt.executeUpdate();
+            deleteAnnouncmentCascadeFavourites(announcmentID);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
     private void deleteContactCascadeFavourites(int contactId) {
         String sql = "DELETE FROM UlubionyKontakt WHERE kontaktID = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -502,6 +549,17 @@ public class DBMenager
             System.out.println(e.getMessage());
         }
     }
+
+    private void deleteAnnouncmentCascadeFavourites(int announcmentID) {
+        String sql = "DELETE FROM UlubioneOgloszenie WHERE ogloszenieID = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, announcmentID);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void deleteFavouriteContact(int contactId) {
         String login = Settings.getInstance().getUser().getLogin();
         int userID = selectUserIdByLogin(login);
@@ -515,6 +573,22 @@ public class DBMenager
             System.out.println(e.getMessage());
         }
     }
+
+    public void deleteFavouriteAnnouncment(int announcmentID) {
+        String login = Settings.getInstance().getUser().getLogin();
+        int userID = selectUserIdByLogin(login);
+
+        String sql = "DELETE FROM UlubioneOgloszenie WHERE ogloszenieID = ? AND uzytkownikID = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, announcmentID);
+            pstmt.setInt(2, userID);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 
 
 

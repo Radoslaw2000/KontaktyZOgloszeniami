@@ -1,6 +1,7 @@
 package com.example.kck.controllers;
 
 import com.example.kck.*;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,7 +9,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -24,7 +27,7 @@ public class ShowAnnouncmentDetailsController {
     GridPane userPanel;
 
     @FXML
-    Text login, titleText, priceText, categoryText, phoneNumberText, townText, voivodeshipText;
+    Text login, tytul, titleText, priceText, categoryText, phoneNumberText, townText, voivodeshipText;
     @FXML
     TextArea descriptionTextArea;
 
@@ -41,6 +44,55 @@ public class ShowAnnouncmentDetailsController {
 
     }
 
+    public void deleteButtonAction(ActionEvent event) throws IOException {
+        tytul.setFill(Color.rgb(51, 204, 51));
+        DBMenager dbMenager = new DBMenager();
+        PauseTransition pause = new PauseTransition(Duration.millis(1500));
+        pause.setOnFinished(event1 -> tytul.setVisible(false));
+
+        if(!isDeleted){
+            dbMenager.deleteAnnouncment(announcment.getId());
+            tytul.setText("Usunięto kontakt");
+            tytul.setVisible(true);
+            isDeleted = true;
+            deleteButton.getStyleClass().clear();
+            deleteButton.getStyleClass().add("edit-button");
+            deleteButton.setText("Przywróć");
+        }
+        else{
+            dbMenager.restoreAnnouncment(announcment);
+            tytul.setText("Przywrócono kontakt");
+            tytul.setVisible(true);
+            isDeleted = false;
+            deleteButton.getStyleClass().clear();
+            deleteButton.getStyleClass().add("delete-button");
+            deleteButton.setText("Usuń");
+        }
+        pause.play();
+
+    }
+
+    public void likeButtonAction(ActionEvent event) throws IOException {
+        System.out.println("Like");
+        DBMenager dbMenager = new DBMenager();
+        PauseTransition pause = new PauseTransition(Duration.millis(1500));
+        pause.setOnFinished(event1 -> tytul.setVisible(false));
+
+        if(dbMenager.isFavoriteAnnouncment(Settings.getInstance().getUser(), announcment.getId())){
+            dbMenager.deleteFavouriteAnnouncment(announcment.getId());
+            tytul.setFill(Color.rgb(234, 27, 48));
+            tytul.setText("Usunięto z ulubionych");
+            tytul.setVisible(true);
+        }
+        else{
+            dbMenager.insertFavouriteAnnouncment(Settings.getInstance().getUser(), announcment);
+            tytul.setFill(Color.rgb(51, 204, 51));
+            tytul.setText("Dodano do ulubionych");
+            tytul.setVisible(true);
+        }
+        pause.play();
+    }
+
 
     public void homeButtonAction(MouseEvent mouseEvent) {
     }
@@ -54,11 +106,6 @@ public class ShowAnnouncmentDetailsController {
     public void editButtonAction(ActionEvent event) {
     }
 
-    public void likeButtonAction(ActionEvent event) {
-    }
-
-    public void deleteButtonAction(ActionEvent event) {
-    }
 
     public void initialize(Announcment announcment) {
         isDeleted = false;

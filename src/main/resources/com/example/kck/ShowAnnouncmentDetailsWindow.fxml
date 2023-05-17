@@ -104,22 +104,30 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GridPane style="-fx-background-color: #333;">
-              <columnConstraints>
-                <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="220.0" minWidth="120.0" prefWidth="220.0" />
-                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
-                <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" maxWidth="140.0" prefWidth="140.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button mnemonicParsing="false" onAction="#powrotButtonAction" styleClass="exit-button" text="Powrót" GridPane.columnIndex="2">
-                     <GridPane.margin>
-                        <Insets right="20.0" />
-                     </GridPane.margin></Button>
-               </children>
-            </GridPane>
+             <GridPane style="-fx-background-color: #333;">
+                 <columnConstraints>
+                     <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="220.0" minWidth="120.0" prefWidth="220.0" />
+                     <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
+                     <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" maxWidth="140.0" prefWidth="140.0" />
+                 </columnConstraints>
+                 <rowConstraints>
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                 </rowConstraints>
+                 <children>
+                     <Button mnemonicParsing="false" onAction="#powrotButtonAction" styleClass="exit-button" text="Powrót" GridPane.columnIndex="2">
+                         <GridPane.margin>
+                             <Insets right="20.0" />
+                         </GridPane.margin></Button>
+                     <Text fx:id="tytul" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+                         <font>
+                             <Font name="System Bold" size="20.0" />
+                         </font>
+                     </Text>
+                 </children>
+                 <padding>
+                     <Insets left="10.0" />
+                 </padding>
+             </GridPane>
              <ScrollPane fitToWidth="true" GridPane.rowIndex="1">
                  <content>
                      <GridPane prefWidth="448.0">
