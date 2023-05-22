@@ -2,8 +2,13 @@ package com.example.kck.controllers;
 
 import com.example.kck.*;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -11,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -94,17 +100,47 @@ public class ShowAnnouncmentDetailsController {
     }
 
 
-    public void homeButtonAction(MouseEvent mouseEvent) {
+    public void homeButtonAction(MouseEvent event){
+        Settings.getInstance().setPageNumber(1);
+        Settings.getInstance().setFavourite(false);
+        Settings.getInstance().setCategory(null);
+        Settings.getInstance().switchScene("MainWindowAnnouncments.fxml");
     }
 
     public void dodajOgloszenieButtonAction(MouseEvent mouseEvent) {
+        Settings.getInstance().switchScene("AddAnnouncmentWindow.fxml");
     }
 
     public void ulubioneButtonAction(MouseEvent mouseEvent) {
+        Settings.getInstance().setPageNumber(1);
+        Settings.getInstance().setFavourite(true);
+        Settings.getInstance().setCategory("wszystko");
+        Settings.getInstance().switchScene("MainWindowAnnouncments.fxml");
     }
 
     public void editButtonAction(ActionEvent event) {
+        System.out.println("Edit");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        double sceneWidth = ((Node) event.getSource()).getScene().getWidth();
+        double sceneHeight = ((Node) event.getSource()).getScene().getHeight();
+
+        Platform.runLater(() -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/kck/EditAnnouncmentWindow.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Scene scene = new Scene(root, sceneWidth, sceneHeight);
+            stage.setScene(scene);
+
+            EditAnnouncmentController controller = loader.getController();
+            controller.initialize(announcment);
+            stage.show();
+        });
     }
+
 
 
     public void initialize(Announcment announcment) {

@@ -81,7 +81,7 @@ public class MainWindowContactsController implements Initializable {
         new GearOptions(event, gear);
     }
 
-    private List<Contact> filtrowaneUlubione(List<Contact>  kontakty){
+    private List<Contact> favouriteFiltered(List<Contact>  kontakty){
         List<Contact> filteredContacts = new ArrayList<>();
 
         for(Contact contact : kontakty) {
@@ -165,7 +165,7 @@ public class MainWindowContactsController implements Initializable {
     private void loadFavouriteContacts(){
         DBMenager dbMenager = new DBMenager();
         List<Contact> contacts = dbMenager.selectFavoriteContacts();
-        List<Contact> kontakty = filtrowaneUlubione(contacts);
+        List<Contact> kontakty = favouriteFiltered(contacts);
         for(int i = 0; i < kontakty.size(); i++){
             Contact contact = kontakty.get(i);
             ContaktGridPane contaktGridPane = new ContaktGridPane(contact);

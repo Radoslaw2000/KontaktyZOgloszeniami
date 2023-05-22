@@ -450,6 +450,26 @@ public class DBMenager
     }
 
 
+    public void updateAnnouncment(Announcment announcment) {
+        String sql = "UPDATE Ogloszenie SET tytul = ?, cena = ?, opis = ?, miejscowosc = ?, kategoria = ?, nrtelefonu = ?, wojewodztwo = ? WHERE ogloszenieID = ?";
+        System.out.println(sql);
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, announcment.getTitle());
+            pstmt.setString(2, announcment.getPrice());
+            pstmt.setString(3, announcment.getDescription());
+            pstmt.setString(4, announcment.getTown());
+            pstmt.setString(5, announcment.getCategory());
+            pstmt.setString(6, announcment.getPhoneNumber());
+            pstmt.setString(7, announcment.getVoivodeship());
+            pstmt.setInt(8, announcment.getId());
+            pstmt.executeUpdate(); // wykonaj zapytanie
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
     public boolean isFavoriteContact(User user, int kontaktID) {
         String sql = "SELECT * FROM UlubionyKontakt WHERE uzytkownikID = ? AND kontaktID = ?";
         int userID = selectUserIdByLogin(user.getLogin());
@@ -516,6 +536,40 @@ public class DBMenager
         }
         return null;
     }
+
+    public List<Announcment> selectFavoriteAnnouncments() {
+        String login = Settings.getInstance().getUser().getLogin();
+        int pageNumber = Settings.getInstance().getPageNumber();
+        int announcmentsNumberOnPage = Settings.getInstance().getContactsNumberOnPage();
+        int userID = selectUserIdByLogin(login);
+
+        List<Announcment> favoriteAnnouncments = new ArrayList<>();
+        int startIndex = (pageNumber - 1) * announcmentsNumberOnPage;
+        String sql = "SELECT o.* FROM Ogloszenie o JOIN UlubioneOgloszenie uo ON o.ogloszenieID = uo.ogloszenieID WHERE uo.uzytkownikID = ? LIMIT ?,?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, userID);
+            pstmt.setInt(2, startIndex);
+            pstmt.setInt(3, announcmentsNumberOnPage);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Announcment announcment = new Announcment();
+                announcment.setId(rs.getInt("ogloszenieID"));
+                announcment.setTitle(rs.getString("tytul"));
+                announcment.setPrice(rs.getString("cena"));
+                announcment.setDescription(rs.getString("opis"));
+                announcment.setTown(rs.getString("miejscowosc"));
+                announcment.setCategory(rs.getString("kategoria"));
+                announcment.setPhoneNumber(rs.getString("nrtelefonu"));
+                announcment.setVoivodeship(rs.getString("wojewodztwo"));
+                favoriteAnnouncments.add(announcment);
+            }
+            return favoriteAnnouncments;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
 
     public void deleteContact(int contactId) {
         String sql = "DELETE FROM Kontakt WHERE kontaktID = ?";

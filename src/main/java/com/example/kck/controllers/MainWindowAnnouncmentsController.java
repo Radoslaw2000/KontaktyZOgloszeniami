@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -72,6 +73,56 @@ public class MainWindowAnnouncmentsController implements Initializable {
         });
     }
 
+
+    private List<Announcment> favouriteFiltered(List<Announcment> announcments) {
+        List<Announcment> filteredList = new ArrayList<>();
+
+        for (Announcment announcment : announcments) {
+            boolean match = true;
+
+            if (!generalTextField.getText().isEmpty()) {
+                String generalLowerCase = generalTextField.getText().toLowerCase();
+                if (!announcment.getTitle().toLowerCase().contains(generalLowerCase) &&
+                        !announcment.getDescription().toLowerCase().contains(generalLowerCase) &&
+                        !announcment.getTown().toLowerCase().contains(generalLowerCase) &&
+                        !announcment.getCategory().toLowerCase().contains(generalLowerCase) &&
+                        !announcment.getPhoneNumber().toLowerCase().contains(generalLowerCase) &&
+                        !announcment.getVoivodeship().toLowerCase().contains(generalLowerCase)) {
+                    match = false;
+                }
+            }
+
+            if (!titleTextField.getText().isEmpty() && !announcment.getTitle().toLowerCase().contains(titleTextField.getText().toLowerCase())) {
+                match = false;
+            }
+            if (!descriptionTextField.getText().isEmpty() && !announcment.getDescription().toLowerCase().contains(descriptionTextField.getText().toLowerCase())) {
+                match = false;
+            }
+            if (!townTextField.getText().isEmpty() && !announcment.getTown().toLowerCase().contains(townTextField.getText().toLowerCase())) {
+                match = false;
+            }
+
+
+            if (match) {
+                filteredList.add(announcment);
+            }
+        }
+
+        return filteredList;
+    }
+
+    private void loadFavouriteAnnouncments(){
+        DBMenager dbMenager = new DBMenager();
+        List<Announcment> announcments = dbMenager.selectFavoriteAnnouncments();
+        List<Announcment> ogloszenia = favouriteFiltered(announcments);
+        for(int i = 0; i < ogloszenia.size(); i++){
+            Announcment announcment = ogloszenia.get(i);
+            AnnouncmentGridPane announcmentGridPane = new AnnouncmentGridPane(announcment);
+            content.getChildren().add(announcmentGridPane);
+        }
+    }
+
+
     private void loadContacts(){
         String generalText, title, description, priceFrom, priceTo, town, voivodeship;
         generalText = generalTextField.getText();
@@ -98,20 +149,33 @@ public class MainWindowAnnouncmentsController implements Initializable {
 
         content.getChildren().clear();
         content.getChildren().add(ps);
-/*
+
         if(Settings.getInstance().isFavourite()){
             favouriteHBox.getStyleClass().clear();
             favouriteHBox.getStyleClass().add("dodaj-contact-button2");
-            //loadFavouriteContacts();
+            loadFavouriteAnnouncments();
         }
-        else */
+        else
             loadContacts();
 
         content.getChildren().add(ps2);
     }
 
     public void ulubioneButtonAction(MouseEvent event){
+        Settings.getInstance().setPageNumber(1);
+        Settings.getInstance().setCategory("wszystko");
+        if(Settings.getInstance().isFavourite()){
+            Settings.getInstance().setFavourite(false);
+            favouriteHBox.getStyleClass().clear();
+            favouriteHBox.getStyleClass().add("dodaj-contact-button");
+        }
+        else{
+            Settings.getInstance().setFavourite(true);
+            favouriteHBox.getStyleClass().clear();
+            favouriteHBox.getStyleClass().add("dodaj-contact-button2");
+        }
 
+        showList();
     }
     public void dodajOgloszenieButtonAction(MouseEvent event) {
         Settings.getInstance().switchScene("AddAnnouncmentWindow.fxml");
