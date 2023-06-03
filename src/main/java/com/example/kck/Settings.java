@@ -15,10 +15,17 @@ public class Settings {
 
     private String category;
 
+    private AnnouncmentsFilterSettings announcmentsFilterSettings;
+    private  ContactsFilterSettings contactsFilterSettings;
+
+
+
     private Settings() {
         pageNumber = 1;
         contactsNumberOnPage = 20;
         sceneSwitcher = new SceneSwitcher();
+        announcmentsFilterSettings = new AnnouncmentsFilterSettings();
+        contactsFilterSettings = new ContactsFilterSettings();
     }
 
     public static Settings getInstance() {
@@ -77,5 +84,13 @@ public class Settings {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public AnnouncmentsFilterSettings getAnnouncmentsFilterSettings() {
+        return announcmentsFilterSettings;
+    }
+
+    public ContactsFilterSettings getContactsFilterSettings() {
+        return contactsFilterSettings;
     }
 }

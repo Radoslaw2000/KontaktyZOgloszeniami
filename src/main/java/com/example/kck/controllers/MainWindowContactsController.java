@@ -60,7 +60,17 @@ public class MainWindowContactsController implements Initializable {
     }
 
     public void filtrButtonAction(ActionEvent event) {
-        System.out.println("filtry");
+        //System.out.println("filtry");
+        Settings.getInstance().getContactsFilterSettings().setGeneralTextField(generalTextField.getText());
+        Settings.getInstance().getContactsFilterSettings().setNameTextField(nameTextField.getText());
+        Settings.getInstance().getContactsFilterSettings().setSurnameTextField(surnameTextField.getText());
+        Settings.getInstance().getContactsFilterSettings().setEmailTextField(emailTextField.getText());
+        Settings.getInstance().getContactsFilterSettings().setTownTextField(townTextField.getText());
+        Settings.getInstance().getContactsFilterSettings().setPhoneNumberTextField(phoneNumberTextField.getText());
+        Settings.getInstance().getContactsFilterSettings().setStreetTextField(streetTextField.getText());
+        Settings.getInstance().getContactsFilterSettings().setHomeNumberTextField(homeNumberTextField.getText());
+        Settings.getInstance().getContactsFilterSettings().setDescriptionTextField(descriptionTextField.getText());
+
         showList();
     }
 
@@ -74,6 +84,7 @@ public class MainWindowContactsController implements Initializable {
         streetTextField.setText("");
         homeNumberTextField.setText("");
         descriptionTextField.setText("");
+        Settings.getInstance().getContactsFilterSettings().clear();
         showList();
     }
 
@@ -231,6 +242,17 @@ public class MainWindowContactsController implements Initializable {
                 userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);
                 login.setText(Settings.getInstance().getUser().getLogin());
                 content.getChildren().clear();
+
+                generalTextField.setText(Settings.getInstance().getContactsFilterSettings().getGeneralTextField());
+                nameTextField.setText(Settings.getInstance().getContactsFilterSettings().getNameTextField());
+                surnameTextField.setText(Settings.getInstance().getContactsFilterSettings().getSurnameTextField());
+                emailTextField.setText(Settings.getInstance().getContactsFilterSettings().getEmailTextField());
+                townTextField.setText(Settings.getInstance().getContactsFilterSettings().getTownTextField());
+                phoneNumberTextField.setText(Settings.getInstance().getContactsFilterSettings().getPhoneNumberTextField());
+                streetTextField.setText(Settings.getInstance().getContactsFilterSettings().getStreetTextField());
+                homeNumberTextField.setText(Settings.getInstance().getContactsFilterSettings().getHomeNumberTextField());
+                descriptionTextField.setText(Settings.getInstance().getContactsFilterSettings().getDescriptionTextField());
+
                 showList();
 
             } catch (Exception e) {

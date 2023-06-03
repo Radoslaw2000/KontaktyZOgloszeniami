@@ -51,6 +51,7 @@ public class EditAnnouncmentController{
     public void homeButtonAction(MouseEvent event){
         Settings.getInstance().setPageNumber(1);
         Settings.getInstance().setCategory(null);
+        Settings.getInstance().getAnnouncmentsFilterSettings().clear();
         Settings.getInstance().switchScene("MainWindowAnnouncments.fxml");
     }
 

@@ -54,6 +54,7 @@ public class MainWindowAnnouncmentsController implements Initializable {
         Settings.getInstance().setPageNumber(1);
         Settings.getInstance().setFavourite(false);
         Settings.getInstance().setCategory(null);
+        Settings.getInstance().getAnnouncmentsFilterSettings().clear();
         Settings.getInstance().switchScene("MainWindowAnnouncments.fxml");
     }
     private void setEventsToPageSelector(PageSelector ps){
@@ -156,7 +157,11 @@ public class MainWindowAnnouncmentsController implements Initializable {
             loadFavouriteAnnouncments();
         }
         else
+        {
+            Settings.getInstance().setCategory("wszystko");
             loadContacts();
+        }
+
 
         content.getChildren().add(ps2);
     }
@@ -175,6 +180,7 @@ public class MainWindowAnnouncmentsController implements Initializable {
             favouriteHBox.getStyleClass().add("dodaj-contact-button2");
         }
 
+        System.out.println(Settings.getInstance().getCategory());
         showList();
     }
     public void dodajOgloszenieButtonAction(MouseEvent event) {
@@ -189,6 +195,17 @@ public class MainWindowAnnouncmentsController implements Initializable {
     public void filtrButtonAction(ActionEvent event) {
         if(isNull(Settings.getInstance().getCategory()))
             Settings.getInstance().setCategory("Wszystko");
+        if(!generalTextField.getText().isEmpty())
+            Settings.getInstance().getAnnouncmentsFilterSettings().setGeneralTextField(generalTextField.getText());
+        System.out.println(Settings.getInstance().getAnnouncmentsFilterSettings().getGeneralTextField());
+
+        Settings.getInstance().getAnnouncmentsFilterSettings().setTitleTextField(titleTextField.getText());
+        Settings.getInstance().getAnnouncmentsFilterSettings().setDescriptionTextField(descriptionTextField.getText());
+        Settings.getInstance().getAnnouncmentsFilterSettings().setPriceFromTextField(priceFromTextField.getText());
+        Settings.getInstance().getAnnouncmentsFilterSettings().setPriceToTextField(priceToTextField.getText());
+        Settings.getInstance().getAnnouncmentsFilterSettings().setTownTextField(townTextField.getText());
+        Settings.getInstance().getAnnouncmentsFilterSettings().setVoivodeshipComboBox((isNull(voivodeshipComboBox.getSelectionModel().getSelectedItem())) ? "" : voivodeshipComboBox.getSelectionModel().getSelectedItem());
+
         showList();
     }
 
@@ -201,7 +218,7 @@ public class MainWindowAnnouncmentsController implements Initializable {
         priceToTextField.setText("");
         townTextField.setText("");
         voivodeshipComboBox.getSelectionModel().clearSelection();
-
+        Settings.getInstance().getAnnouncmentsFilterSettings().clear();
     }
 
     public void gearButtonAction(MouseEvent event) {
@@ -243,6 +260,14 @@ public class MainWindowAnnouncmentsController implements Initializable {
                 ObservableList<String> voievodeships = voivodeshipComboBox.getItems();
                 voievodeships.addAll("cała polska", "dolnośląskie", "kujawsko-pomorskie", "lubelskie", "lubuskie", "łódzkie", "małopolskie", "mazowieckie", "opolskie", "podkarpackie", "podlaskie", "pomorskie", "śląskie", "świętokrzyskie", "warmińsko-mazurskie", "wielkopolskie", "zachodniopomorskie");
                 voivodeshipComboBox.setItems(voievodeships);
+
+                generalTextField.setText(Settings.getInstance().getAnnouncmentsFilterSettings().getGeneralTextField());
+                titleTextField.setText(Settings.getInstance().getAnnouncmentsFilterSettings().getTitleTextField());
+                descriptionTextField.setText(Settings.getInstance().getAnnouncmentsFilterSettings().getDescriptionTextField());
+                priceFromTextField.setText(Settings.getInstance().getAnnouncmentsFilterSettings().getPriceFromTextField());
+                priceToTextField.setText(Settings.getInstance().getAnnouncmentsFilterSettings().getPriceToTextField());
+                townTextField.setText(Settings.getInstance().getAnnouncmentsFilterSettings().getTownTextField());
+                voivodeshipComboBox.getSelectionModel().select(Settings.getInstance().getAnnouncmentsFilterSettings().getVoivodeshipComboBox());
 
                 if(isNull(Settings.getInstance().getCategory()))
                     responsiveCategoryMenu(Settings.getInstance().getStage().getScene());

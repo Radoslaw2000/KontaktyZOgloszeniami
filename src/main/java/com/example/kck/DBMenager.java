@@ -308,6 +308,7 @@ public class DBMenager
         }
         if(!whereClauseAdded)
             sqlBuilder.append(" 1 ");
+
         sqlBuilder.append(" ORDER BY nazwisko LIMIT ").append(startIndex).append(", ").append(contactsNumberOnPage);
 
         String sql = sqlBuilder.toString();
@@ -346,9 +347,9 @@ public class DBMenager
         boolean whereClauseAdded = false;
 
         if (!generalText.isEmpty()) {
-            sqlBuilder.append("(tytul LIKE '%").append(generalText).append("%' OR ");
+            sqlBuilder.append("tytul LIKE '%").append(generalText).append("%' OR ");
             sqlBuilder.append("opis LIKE '%").append(generalText).append("%' OR ");
-            sqlBuilder.append("miejscowosc LIKE '%").append(generalText).append("%')");
+            sqlBuilder.append("miejscowosc LIKE '%").append(generalText).append("%'");
             whereClauseAdded = true;
         }
         if (!title.isEmpty()) {
@@ -395,10 +396,11 @@ public class DBMenager
         }
         if (!Settings.getInstance().getCategory().equals("Wszystko")) {
             if (whereClauseAdded) {
-                sqlBuilder.append(" AND ");
+                //sqlBuilder.append(" AND ");
+               // whereClauseAdded = false;
             }
-            sqlBuilder.append("kategoria LIKE '%").append(Settings.getInstance().getCategory()).append("%'");
-            whereClauseAdded = true;
+            //sqlBuilder.append("kategoria LIKE '%").append(Settings.getInstance().getCategory()).append("%'");
+
         }
 
         if(!whereClauseAdded)

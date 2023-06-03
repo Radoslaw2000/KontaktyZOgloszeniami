@@ -104,6 +104,7 @@ public class ShowAnnouncmentDetailsController {
         Settings.getInstance().setPageNumber(1);
         Settings.getInstance().setFavourite(false);
         Settings.getInstance().setCategory(null);
+        Settings.getInstance().getAnnouncmentsFilterSettings().clear();
         Settings.getInstance().switchScene("MainWindowAnnouncments.fxml");
     }
 
