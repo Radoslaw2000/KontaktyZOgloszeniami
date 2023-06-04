@@ -18,6 +18,8 @@
     
     h1 {
       text-align: center;
+      background-color: #e3e3e3;
+      padding: 10px;
     }
     
     p {
@@ -29,7 +31,8 @@
     }
     
     .section-header {
-      background-color: #e3e3e3;
+      background-color: #333;
+      color: white;
       padding: 10px;
       font-weight: bold;
     }
@@ -38,29 +41,247 @@
       padding: 10px;
       border: 1px solid #e3e3e3;
     }
+
+    a:link
+    {
+      color: black;
+      text-decoration: none;
+    }
+
+    a:visited
+    {
+      color: black;
+      text-decoration: none;
+    }
+
+    a:hover
+    {
+      color: #2F5AA1;
+      text-decoration: underline;
+    }
+
+    a:active
+    {
+      color: black;
+      text-decoration: none;
+    }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	
+	<script src="jquery.scrollTo.min.js"></script>
+	
+	<script>
+		
+		jQuery(function($)
+		{
+			//zresetuj scrolla
+			$.scrollTo(0);
+			$('#link1').click(function() { $.scrollTo($('#a'), 500); });
+			$('#link2').click(function() { $.scrollTo($('#b'), 500); });
+			$('#link3').click(function() { $.scrollTo($('#c'), 500); });
+			$('#link4').click(function() { $.scrollTo($('#d'), 500); });
+			$('#link5').click(function() { $.scrollTo($('#e'), 500); });
+			$('#link6').click(function() { $.scrollTo($('#f'), 500); });
+			$('#link7').click(function() { $.scrollTo($('#g'), 500); });
+			$('#link8').click(function() { $.scrollTo($('#h'), 500); });
+			$('#link9').click(function() { $.scrollTo($('#i'), 500); });
+			$('#link10').click(function() { $.scrollTo($('#j'), 500); });
+			$('#link11').click(function() { $.scrollTo($('#k'), 500); });
+			$('#link12').click(function() { $.scrollTo($('#l'), 500); });
+	
+			$('.scrollup').click(function() { $.scrollTo($('body'), 1000); });
+		}
+		);
+		
+		//pokaż podczas przewijania
+		$(window).scroll(function()
+		{
+			if($(this).scrollTop()>300) $('.scrollup').fadeIn();
+			else $('.scrollup').fadeOut();		
+		}
+		);
+	
+	
+	</script>
 </head>
 <body>
   <div class="container">
     <h1>Instrukcja obsługi aplikacji PhoneBook</h1>
     
-    <div class="section">
-      <div class="section-header">Sekcja 1</div>
+    <div class="section" id="a0">
+      <div class="section-header">Spis treści</div>
       <div class="section-content">
-        <p>Logowanie i rejestracja</p>
-        <p>Paragraf 2</p>
-        <p>Paragraf 3</p>
+        <ol>
+          <li><a id="link1" href="#">Dodawanie kontaktu</a></li>
+          <li><a id="link2" href="#">Dodawanie ogłoszenia</a></li>
+          <li><a id="link3" href="#">Edycja kontaktu</a></li>
+          <li><a id="link4" href="#">Edycja ogłoszenia</a></li>
+          <li><a id="link5" href="#">Usuwanie kontaktu</a></li>
+          <li><a id="link6" href="#">Usuwanie ogłoszenia</a></li>
+          <li><a id="link7" href="#">Dodawanie kontaktu do ulubionych</a></li>
+          <li><a id="link8" href="#">Dodawanie ogłoszenia do ulubionych</a></li>
+          <li><a id="link9" href="#">Filtracja kontaktów</a></li>
+          <li><a id="link10" href="#">Filtracja ogłoszeń</a></li>
+          <li><a id="link11" href="#">Powrót do ekranu głównego</a></li>
+          <li><a id="link12" href="#">Wylogowanie się z aplikacji</a></li>
+        </ol>
       </div>
     </div>
     
-    <div class="section">
-      <div class="section-header">Sekcja 2</div>
+    <div class="section" id="a">
+      <div class="section-header">Dodawanie kontaktu</div>
       <div class="section-content">
-        <p>Paragraf 4</p>
-        <p>Paragraf 5</p>
-        <p>Paragraf 6</p>
+        <p>Jeśli uważasz, że w naszej bazie brakuje jakiegoś numeru i chciałbyś go dodać, postępuj zgodnie z poniższymi krokami:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij przycisk "Kontakty".</li>
+          <li>Następnie kliknij przycisk "Dodaj kontakt".</li>
+          <li>Wypełnij formularz wprowadzając informacje o kontakcie.</li>
+          <li>Upewnij się, że wprowadzone dane są poprawne.</li>
+          <li>Kliknij przycisk "Dodaj kontakt", aby zapisać nowy kontakt.</li>
+        </ul>
       </div>
     </div>
+    <div class="section" id="b">
+      <div class="section-header">Dodawanie ogłoszenia</div>
+      <div class="section-content">
+        <p>Jeśli chcesz dodać nowe ogłoszenie, wykonaj poniższe kroki:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij przycisk "Ogłoszenia".</li>
+          <li>Wybierz odpowiednią kategorię ogłoszeń.</li>
+          <li>Kliknij przycisk "Dodaj ogłoszenie".</li>
+          <li>Wypełnij formularz wprowadzając szczegóły ogłoszenia.</li>
+          <li>Upewnij się, że wprowadzone dane są poprawne.</li>
+          <li>Kliknij przycisk "Dodaj ogłoszenie", aby zapisać nowe ogłoszenie.</li>
+        </ul>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="c">
+      <div class="section-header">Edycja kontaktu</div>
+      <div class="section-content">
+        <p>Aby edytować istniejący kontakt, wykonaj poniższe kroki:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij na wybrany kontakt z listy.</li>
+          <li>Wyświetlą się szczegółowe informacje o kontakcie.</li>
+          <li>Kliknij przycisk "Edytuj", aby przejść do formularza edycji.</li>
+          <li>Edytuj dane kontaktu według potrzeb.</li>
+          <li>Kliknij przycisk "Zapisz", aby zatwierdzić wprowadzone zmiany.</li>
+          <li>Jeśli chcesz anulować edycję, kliknij przycisk "Anuluj".</li>
+        </ul>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="d">
+      <div class="section-header">Edycja ogłoszenia</div>
+      <div class="section-content">
+        <p>Aby edytować istniejące ogłoszenie, wykonaj poniższe kroki:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij na wybrane ogłoszenie z listy.</li>
+          <li>Wyświetlą się szczegółowe informacje o ogłoszeniu.</li>
+          <li>Kliknij przycisk "Edytuj", aby przejść do formularza edycji.</li>
+          <li>Edytuj szczegóły ogłoszenia według potrzeb.</li>
+          <li>Kliknij przycisk "Zapisz", aby zatwierdzić wprowadzone zmiany.</li>
+          <li>Jeśli chcesz anulować edycję, kliknij przycisk "Anuluj".</li>
+        </ul>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="e">
+      <div class="section-header">Usuwanie kontaktu</div>
+      <div class="section-content">
+        <p>Aby usunąć kontakt, wykonaj poniższe kroki:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij na wybrany kontakt z listy.</li>
+          <li>Wyświetlą się bardziej szczegółowe informacje o kontakcie.</li>
+          <li>Kliknij przycisk "Usuń".</li>
+          <li>Jeśli chcesz przywrócić usunięty kontakt, kliknij przycisk "Przywróć" (jeśli jest dostępny).</li>
+        </ul>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="f">
+      <div class="section-header">Usuwanie ogłoszenia</div>
+      <div class="section-content">
+        <p>Aby usunąć ogłoszenie, wykonaj poniższe kroki:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij na wybrane ogłoszenie z listy.</li>
+          <li>Wyświetlą się bardziej szczegółowe informacje o ogłoczeniu.</li>
+          <li>Kliknij przycisk "Usuń".</li>
+          <li>Jeśli chcesz przywrócić usunięte ogłoszenie, kliknij przycisk "Przywróć" (jeśli jest dostępny).</li>
+        </ul>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="g">
+      <div class="section-header">Dodawanie kontaktu do ulubionych</div>
+      <div class="section-content">
+        <p>Aby dodać kontakt do ulubionych, wykonaj poniższe kroki:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij na wybrany kontakt z listy.</li>
+          <li>Wyświetlą się bardziej szczegółowe informacje o kontakcie.</li>
+          <li>Kliknij przycisk "Polub", aby dodać kontakt do ulubionych.</li>
+        </ul>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="h">
+      <div class="section-header">Dodawanie ogłoszenia do ulubionych</div>
+      <div class="section-content">
+        <p>Aby dodać ogłoszenie do ulubionych, wykonaj poniższe kroki:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij na wybrane ogłoszenie z listy.</li>
+          <li>Wyświetlą się szczegółowe informacje o ogłoszeniu.</li>
+          <li>Kliknij przycisk "Polub", aby dodać ogłoszenie do ulubionych.</li>
+        </ul>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="i">
+      <div class="section-header">Filtracja kontaktów</div>
+      <div class="section-content">
+        <p>Aby zawęzić listę kontaktów przy użyciu filtrów, postępuj zgodnie z poniższymi krokami:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij przycisk "Kontakty".</li>
+          <li>W lewej części ekranu znajdują się pola filtrów.</li>
+          <li>Wpisz odpowiednie wartości w polach filtrów, np. nazwę miasta w polu "Lokalizacja".</li>
+          <li>Kliknij przycisk "Filtruj", aby zastosować wybrane filtry.</li>
+          <li>Lista kontaktów zostanie odświeżona i wyświetlą się tylko kontakty spełniające kryteria filtrów.</li>
+          <li>Jeśli chcesz wyczyścić filtry i wyświetlić wszystkie kontakty, kliknij przycisk "Wyczyść".</li>
+        </ul>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="j">
+      <div class="section-header">Filtracja ogłoszeń</div>
+      <div class="section-content">
+        <p>Aby zawęzić listę ogłoszeń przy użyciu filtrów, postępuj zgodnie z poniższymi krokami:</p>
+        <ul>
+          <li>Na ekranie głównym kliknij przycisk "Ogłoszenia".</li>
+          <li>W lewej części ekranu znajdują się pola filtrów.</li>
+          <li>Wpisz odpowiednie wartości w polach filtrów, np. zakres cenowy ogłoszeń.</li>
+          <li>Kliknij przycisk "Filtruj", aby zastosować wybrane filtry.</li>
+          <li>Lista ogłoszeń zostanie odświeżona i wyświetlą się tylko ogłoszenia spełniające kryteria filtrów.</li>
+          <li>Jeśli chcesz wyczyścić filtry i wyświetlić wszystkie ogłoszenia, kliknij przycisk "Wyczyść".</li>
+        </ul>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="k">
+      <div class="section-header">Powrót do ekranu głównego</div>
+      <div class="section-content">
+        <p>Aby powrócić do ekranu głównego (listy kontaktów lub ogłoszeń), kliknij na logo aplikacji znajdujące się w lewym górnym rogu ekranu.</p>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+    <div class="section" id="l">
+      <div class="section-header">Wylogowanie się z aplikacji</div>
+      <div class="section-content">
+        <p>Aby się wylogować z aplikacji, kliknij na ikonę zębatki znajdującą się w lewym dolnym rogu ekranu, a następnie wybierz opcję "Wyloguj"</p>
+        <p style="text-align: right;"><a href="#">powrót</a></p>
+      </div>
+    </div>
+
+
   </div>
 </body>
 </html>
