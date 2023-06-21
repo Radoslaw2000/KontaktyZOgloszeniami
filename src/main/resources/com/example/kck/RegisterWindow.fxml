@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -31,9 +32,7 @@
          </font>
       </Label>
       <TextField fx:id="loginTextField" maxWidth="-Infinity" prefWidth="300.0" promptText="Login" GridPane.rowIndex="2" />
-      <TextField fx:id="passwordTextField" maxWidth="-Infinity" prefWidth="300.0" promptText="Hasło" styleClass="text-field" GridPane.rowIndex="3" />
       <Button mnemonicParsing="false" onAction="#registerButtonAction" prefWidth="100.0" styleClass="login-button" text="Zarejestruj" GridPane.rowIndex="5" />
-      <TextField fx:id="repeatPasswordTextField" maxWidth="-Infinity" prefWidth="300.0" promptText="Powtórz Hasło" styleClass="text-field" GridPane.rowIndex="4" />
       <Button mnemonicParsing="false" onAction="#returnButtonAction" styleClass="exit-button" text="Powrót" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets right="10.0" top="10.0" />
@@ -50,5 +49,7 @@
             <Blend />
          </effect>
       </Text>
+      <PasswordField fx:id="passwordTextField" maxWidth="-Infinity" prefWidth="300.0" promptText="Hasło" GridPane.rowIndex="3" />
+      <PasswordField fx:id="repeatPasswordTextField" maxWidth="-Infinity" prefWidth="300.0" promptText="Powtórz Hasło" GridPane.rowIndex="4" />
    </children>
 </GridPane>

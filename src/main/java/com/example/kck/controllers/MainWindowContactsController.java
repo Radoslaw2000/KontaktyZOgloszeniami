@@ -44,6 +44,8 @@ public class MainWindowContactsController implements Initializable {
     @FXML
     MenuButton numberOfPagesMenu;
 
+    private boolean isLastPage;
+
     public void homeButtonAction(MouseEvent event){
         Settings.getInstance().setPageNumber(1);
         Settings.getInstance().setFavourite(false);
@@ -167,6 +169,9 @@ public class MainWindowContactsController implements Initializable {
         List<Contact> kontakty = dbMenager.selectContactsFiltered(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage(),
                 generalTextField.getText(), nameTextField.getText(), surnameTextField.getText(), emailTextField.getText(), townTextField.getText(),
                 phoneNumberTextField.getText(), streetTextField.getText(), homeNumberTextField.getText(), descriptionTextField.getText());
+
+        isLastPage = kontakty.size() != Settings.getInstance().getContactsNumberOnPage();
+
         for(int i = 0; i < kontakty.size(); i++){
             Contact contact = kontakty.get(i);
             ContaktGridPane contaktGridPane = new ContaktGridPane(contact);
@@ -177,6 +182,9 @@ public class MainWindowContactsController implements Initializable {
         DBMenager dbMenager = new DBMenager();
         List<Contact> contacts = dbMenager.selectFavoriteContacts();
         List<Contact> kontakty = favouriteFiltered(contacts);
+
+        isLastPage = kontakty.size() != Settings.getInstance().getContactsNumberOnPage();
+
         for(int i = 0; i < kontakty.size(); i++){
             Contact contact = kontakty.get(i);
             ContaktGridPane contaktGridPane = new ContaktGridPane(contact);
@@ -221,6 +229,9 @@ public class MainWindowContactsController implements Initializable {
             loadContacts();
 
         content.getChildren().add(ps2);
+
+        ps.hideRightArrow(!isLastPage);
+        ps2.hideRightArrow(!isLastPage);
     }
 
 

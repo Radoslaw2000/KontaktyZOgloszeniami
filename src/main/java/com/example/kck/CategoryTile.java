@@ -16,6 +16,7 @@ import static java.util.Objects.isNull;
 public class CategoryTile extends VBox {
     private ImageView imageView;
     private Text categoryName;
+    private boolean isLastPage;
 
     /*
         String image2 = "@Kategorie/1.png";
@@ -75,6 +76,7 @@ public class CategoryTile extends VBox {
     private void loadContacts(VBox content){
         DBMenager dbMenager = new DBMenager();
         List<Announcment> announcments = dbMenager.selectAnnouncmentFiltered(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage(), "", "", "", "", "", "","");
+        isLastPage = announcments.size() != Settings.getInstance().getContactsNumberOnPage();
 
         for (Announcment announcment : announcments) {
             content.getChildren().add(new AnnouncmentGridPane(announcment));
@@ -98,6 +100,8 @@ public class CategoryTile extends VBox {
         loadContacts(content);
 
         content.getChildren().add(ps2);
+        ps.hideRightArrow(!isLastPage);
+        ps2.hideRightArrow(!isLastPage);
     }
 
     public ImageView getImageView() {

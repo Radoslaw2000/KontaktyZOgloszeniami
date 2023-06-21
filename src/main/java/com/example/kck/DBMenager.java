@@ -120,15 +120,16 @@ public class DBMenager
 
 
     public void insertAnnouncment(Announcment announcment) {
-        String sql = "INSERT INTO Ogloszenie (tytul, cena, opis, miejscowosc, kategoria, nrtelefonu, wojewodztwo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Ogloszenie (autorID, tytul, cena, opis, miejscowosc, kategoria, nrtelefonu, wojewodztwo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, announcment.getTitle());
-            pstmt.setString(2, announcment.getPrice());
-            pstmt.setString(3, announcment.getDescription());
-            pstmt.setString(4, announcment.getTown());
-            pstmt.setString(5, announcment.getCategory());
-            pstmt.setString(6, announcment.getPhoneNumber());
-            pstmt.setString(7, announcment.getVoivodeship());
+            pstmt.setInt(1, announcment.getAutorId());
+            pstmt.setString(2, announcment.getTitle());
+            pstmt.setString(3, announcment.getPrice());
+            pstmt.setString(4, announcment.getDescription());
+            pstmt.setString(5, announcment.getTown());
+            pstmt.setString(6, announcment.getCategory());
+            pstmt.setString(7, announcment.getPhoneNumber());
+            pstmt.setString(8, announcment.getVoivodeship());
             pstmt.executeUpdate(); // wykonaj zapytanie
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -175,6 +176,7 @@ public class DBMenager
         }
         return -1; // gdy nie znaleziono użytkownika
     }
+
 
     public List<Contact> selectContacts() {
         List<Contact> kontakty = new ArrayList<>();
@@ -396,16 +398,15 @@ public class DBMenager
         }
         if (!Settings.getInstance().getCategory().equals("Wszystko")) {
             if (whereClauseAdded) {
-                //sqlBuilder.append(" AND ");
-               // whereClauseAdded = false;
+                sqlBuilder.append(" AND ");
             }
-            //sqlBuilder.append("kategoria LIKE '%").append(Settings.getInstance().getCategory()).append("%'");
-
+            sqlBuilder.append("kategoria LIKE '%").append(Settings.getInstance().getCategory()).append("%'");
+            whereClauseAdded = true;
         }
 
         if(!whereClauseAdded)
             sqlBuilder.append(" 1 ");
-        sqlBuilder.append(" ORDER BY ogloszenieID LIMIT ").append(indeksStartowy).append(", ").append(contactsNumberOnPage);
+        sqlBuilder.append(" ORDER BY tytul LIMIT ").append(indeksStartowy).append(", ").append(contactsNumberOnPage);
 
         String sql = sqlBuilder.toString();
         System.out.println(sql); ///////////////
@@ -415,6 +416,7 @@ public class DBMenager
             while (rs.next()) {
                 Announcment announcment = new Announcment();
                 announcment.setId(rs.getInt("ogloszenieID"));
+                announcment.setAutorId(rs.getInt("autorID"));
                 announcment.setTitle(rs.getString("tytul"));
                 announcment.setPrice(rs.getString("cena"));
                 announcment.setDescription(rs.getString("opis"));

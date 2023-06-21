@@ -99,7 +99,7 @@ public class EditAnnouncmentController{
             return;
         }
 
-        Announcment announcment = new Announcment(this.announcment.getId(), price, title, description, town, category, phoneNumber, voivodeship);
+        Announcment announcment = new Announcment(this.announcment.getId(), this.announcment.getAutorId(), price, title, description, town, category, phoneNumber, voivodeship);
 
         DBMenager dbMenager = new DBMenager();
         dbMenager.updateAnnouncment(announcment);

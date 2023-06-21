@@ -120,12 +120,18 @@ public class ShowContactDetailsController {
             tytul.setFill(Color.rgb(234, 27, 48));
             tytul.setText("Usunięto z ulubionych");
             tytul.setVisible(true);
+            likeButton.getStyleClass().clear();
+            likeButton.getStyleClass().add("group-button");
+            likeButton.setText("Like");
         }
         else{
             dbMenager.insertFavouriteContact(Settings.getInstance().getUser(), contact);
             tytul.setFill(Color.rgb(51, 204, 51));
             tytul.setText("Dodano do ulubionych");
             tytul.setVisible(true);
+            likeButton.getStyleClass().clear();
+            likeButton.getStyleClass().add("unlike-button");
+            likeButton.setText("Unlike");
         }
         pause.play();
     }
@@ -139,6 +145,13 @@ public class ShowContactDetailsController {
     }
 
     public void initialize(Contact contact) {
+        DBMenager dbMenager = new DBMenager();
+        likeButton.setText("Like");
+        if(dbMenager.isFavoriteContact(Settings.getInstance().getUser(), contact.getId())){
+            likeButton.getStyleClass().clear();
+            likeButton.getStyleClass().add("unlike-button");
+            likeButton.setText("Unlike");
+        }
         isDeleted = false;
         this.contact = contact;
         userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);

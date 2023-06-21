@@ -22,7 +22,6 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static java.util.Objects.isNull;
@@ -49,6 +48,7 @@ public class MainWindowAnnouncmentsController implements Initializable {
     @FXML
     MenuButton numberOfPagesMenu;
 
+    private boolean isLastPage;
 
     public void homeButtonAction(MouseEvent event){
         Settings.getInstance().setPageNumber(1);
@@ -116,6 +116,8 @@ public class MainWindowAnnouncmentsController implements Initializable {
         DBMenager dbMenager = new DBMenager();
         List<Announcment> announcments = dbMenager.selectFavoriteAnnouncments();
         List<Announcment> ogloszenia = favouriteFiltered(announcments);
+        isLastPage = ogloszenia.size() != Settings.getInstance().getContactsNumberOnPage();
+
         for(int i = 0; i < ogloszenia.size(); i++){
             Announcment announcment = ogloszenia.get(i);
             AnnouncmentGridPane announcmentGridPane = new AnnouncmentGridPane(announcment);
@@ -124,7 +126,7 @@ public class MainWindowAnnouncmentsController implements Initializable {
     }
 
 
-    private void loadContacts(){
+    private void loadAnnouncments(){
         String generalText, title, description, priceFrom, priceTo, town, voivodeship;
         generalText = generalTextField.getText();
         title = titleTextField.getText();
@@ -132,11 +134,13 @@ public class MainWindowAnnouncmentsController implements Initializable {
         priceFrom = priceFromTextField.getText();
         priceTo = priceToTextField.getText();
         town = townTextField.getText();
-        voivodeship = (isNull(voivodeshipComboBox.getSelectionModel().getSelectedItem())) ? "" : voivodeshipComboBox.getSelectionModel().getSelectedItem();
+        voivodeship = (isNull(voivodeshipComboBox.getSelectionModel().getSelectedItem())) ? "cała polska" : voivodeshipComboBox.getSelectionModel().getSelectedItem();
 
         DBMenager dbMenager = new DBMenager();
         List<Announcment> announcments = dbMenager.selectAnnouncmentFiltered(Settings.getInstance().getPageNumber(), Settings.getInstance().getContactsNumberOnPage(),
                 generalText, title, description, priceFrom, priceTo, town, voivodeship);
+
+        isLastPage = announcments.size() != Settings.getInstance().getContactsNumberOnPage();
 
         for (Announcment announcment : announcments) {
             content.getChildren().add(new AnnouncmentGridPane(announcment));
@@ -158,17 +162,17 @@ public class MainWindowAnnouncmentsController implements Initializable {
         }
         else
         {
-            Settings.getInstance().setCategory("wszystko");
-            loadContacts();
+            //Settings.getInstance().setCategory("Wszystko");
+            loadAnnouncments();
         }
-
-
         content.getChildren().add(ps2);
+        ps.hideRightArrow(!isLastPage);
+        ps2.hideRightArrow(!isLastPage);
     }
 
     public void ulubioneButtonAction(MouseEvent event){
         Settings.getInstance().setPageNumber(1);
-        Settings.getInstance().setCategory("wszystko");
+        Settings.getInstance().setCategory("Wszystko");
         if(Settings.getInstance().isFavourite()){
             Settings.getInstance().setFavourite(false);
             favouriteHBox.getStyleClass().clear();
@@ -218,6 +222,7 @@ public class MainWindowAnnouncmentsController implements Initializable {
         priceToTextField.setText("");
         townTextField.setText("");
         voivodeshipComboBox.getSelectionModel().clearSelection();
+        voivodeshipComboBox.getSelectionModel().select("cała polska");
         Settings.getInstance().getAnnouncmentsFilterSettings().clear();
     }
 
@@ -253,6 +258,8 @@ public class MainWindowAnnouncmentsController implements Initializable {
 
         Platform.runLater(() -> {
             try {
+
+                isLastPage = false;
                 numberOfPagesMenu.setText(String.valueOf(Settings.getInstance().getContactsNumberOnPage()));
                 for (MenuItem item : numberOfPagesMenu.getItems()) {
                     item.setOnAction(event -> setNewValue(item.getText()));
@@ -260,6 +267,7 @@ public class MainWindowAnnouncmentsController implements Initializable {
                 ObservableList<String> voievodeships = voivodeshipComboBox.getItems();
                 voievodeships.addAll("cała polska", "dolnośląskie", "kujawsko-pomorskie", "lubelskie", "lubuskie", "łódzkie", "małopolskie", "mazowieckie", "opolskie", "podkarpackie", "podlaskie", "pomorskie", "śląskie", "świętokrzyskie", "warmińsko-mazurskie", "wielkopolskie", "zachodniopomorskie");
                 voivodeshipComboBox.setItems(voievodeships);
+                Settings.getInstance().getAnnouncmentsFilterSettings().setVoivodeshipComboBox((isNull(voivodeshipComboBox.getSelectionModel().getSelectedItem())) ? "cała polska" : voivodeshipComboBox.getSelectionModel().getSelectedItem());
 
                 generalTextField.setText(Settings.getInstance().getAnnouncmentsFilterSettings().getGeneralTextField());
                 titleTextField.setText(Settings.getInstance().getAnnouncmentsFilterSettings().getTitleTextField());

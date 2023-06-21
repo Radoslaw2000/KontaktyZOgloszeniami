@@ -3,6 +3,8 @@ package com.example.kck;
 
 public class Announcment {
     private int id;
+
+    private int autorId;
     private String price;
     private String title;
     private String description;
@@ -14,7 +16,8 @@ public class Announcment {
 
     public Announcment(){}
 
-    public Announcment(int id, String price, String title, String description, String town, String category, String phoneNumber, String voivodeship) {
+    public Announcment(int id, int autorID, String price, String title, String description, String town, String category, String phoneNumber, String voivodeship) {
+        this.autorId = autorID;
         this.id = id;
         this.price = price;
         this.title = title;
@@ -87,5 +90,13 @@ public class Announcment {
 
     public void setVoivodeship(String voivodeship) {
         this.voivodeship = voivodeship;
+    }
+
+    public int getAutorId() {
+        return autorId;
+    }
+
+    public void setAutorId(int autorId) {
+        this.autorId = autorId;
     }
 }

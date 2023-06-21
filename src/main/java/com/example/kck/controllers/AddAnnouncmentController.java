@@ -98,9 +98,11 @@ public class AddAnnouncmentController implements Initializable {
             return;
         }
 
-        Announcment announcment = new Announcment(1, price, title, description, town, category, phoneNumber, voivodeship);
-        //baza
         DBMenager dbMenager = new DBMenager();
+        int autorID = dbMenager.selectUserIdByLogin(Settings.getInstance().getUser().getLogin());
+        System.out.println("autorID: "+ autorID);
+        Announcment announcment = new Announcment(1, autorID, price, title, description, town, category, phoneNumber, voivodeship);
+
         dbMenager.insertAnnouncment(announcment);
         tytul.setText("Dodano ogłoszenie do bazy");
         tytul.setFill(Color.rgb(51, 204, 51));

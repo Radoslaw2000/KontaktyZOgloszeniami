@@ -69,6 +69,9 @@ public class PageSelector extends GridPane {
         setColumnIndex(increse, 3);
         getChildren().add(increse);
 
+        if(Settings.getInstance().getPageNumber() == 1)
+            decrese.setVisible(false);
+
     }
 
     public void  increse(){
@@ -86,6 +89,10 @@ public class PageSelector extends GridPane {
 
     public Text getDecrese() {
         return decrese;
+    }
+
+    public void hideRightArrow(boolean b){
+        increse.setVisible(b);
     }
 
 }

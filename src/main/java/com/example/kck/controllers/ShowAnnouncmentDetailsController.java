@@ -89,12 +89,18 @@ public class ShowAnnouncmentDetailsController {
             tytul.setFill(Color.rgb(234, 27, 48));
             tytul.setText("Usunięto z ulubionych");
             tytul.setVisible(true);
+            likeButton.getStyleClass().clear();
+            likeButton.getStyleClass().add("group-button");
+            likeButton.setText("Like");
         }
         else{
             dbMenager.insertFavouriteAnnouncment(Settings.getInstance().getUser(), announcment);
             tytul.setFill(Color.rgb(51, 204, 51));
             tytul.setText("Dodano do ulubionych");
             tytul.setVisible(true);
+            likeButton.getStyleClass().clear();
+            likeButton.getStyleClass().add("unlike-button");
+            likeButton.setText("Unlike");
         }
         pause.play();
     }
@@ -142,9 +148,23 @@ public class ShowAnnouncmentDetailsController {
         });
     }
 
+    private boolean isAnnouncmentMine(){
+        DBMenager dbMenager = new DBMenager();
+        if(announcment.getAutorId() == dbMenager.selectUserIdByLogin(Settings.getInstance().getUser().getLogin()))
+            return true;
+        return false;
+    }
+
 
 
     public void initialize(Announcment announcment) {
+        DBMenager dbMenager = new DBMenager();
+        likeButton.setText("Like");
+        if(dbMenager.isFavoriteAnnouncment(Settings.getInstance().getUser(), announcment.getId())){
+            likeButton.getStyleClass().clear();
+            likeButton.getStyleClass().add("unlike-button");
+            likeButton.setText("Unlike");
+        }
         isDeleted = false;
         this.announcment = announcment;
         userPanel.add(new LetterCircle(Settings.getInstance().getUser().getLogin().charAt(0),17), 0, 0);
@@ -160,6 +180,11 @@ public class ShowAnnouncmentDetailsController {
         descriptionTextArea.setText(announcment.getDescription());
 
         if(Settings.getInstance().getUser().isAdmin()){
+            editButton.setVisible(true);
+            deleteButton.setVisible(true);
+        }
+
+        if(isAnnouncmentMine()){
             editButton.setVisible(true);
             deleteButton.setVisible(true);
         }
